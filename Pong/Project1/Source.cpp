@@ -723,7 +723,7 @@ int main(void)
 
 						ball.position = { screenWidth / 2, screenHeight / 2 };
 						ball.direction = { (float)GetRandomValue(minBallSpeed, maxBallSpeed - 1), (float)(maxBallSpeed - ball.direction.x) };
-						IAPaddleSpeed = (float)GetRandomValue(minIAPaddleSpeed, maxIAPaddleSpeed);
+						IAPaddleSpeed = (float)GetRandomValue((int)minIAPaddleSpeed, (int)maxIAPaddleSpeed);
 
 						randomN = GetRandomValue(1, 2);
 						if (randomN == 1)
