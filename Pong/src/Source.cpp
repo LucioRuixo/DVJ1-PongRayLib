@@ -29,81 +29,78 @@
 
 #include "raylib.h"
 
+const int screenWidth = 1300;
+const int screenHeight = 700;
+const int minPUSpawnTimer = 60 * 5;
+const int maxPUSpawnTimer = 60 * 15;
+const int paddleWidth = 20;
+const int paddleHeight = 100;
+const int paddleSpeed = 20;
+const int minIAPaddleSpeed = 4;
+const int maxIAPaddleSpeed = 9;
+const int minBallSpeed = 15;
+const int maxBallSpeed = 20;
+
+enum GameState
+{
+	MainMenu,
+	SelectionMenu,
+	PvP,
+	PvIA,
+	GameOver
+};
+
+enum PowerUps
+{
+	Bigger,
+	Smaller,
+	Speedier,
+	LessSpeedy,
+	Shield
+};
+
+struct Paddle
+{
+	Rectangle rec;
+	Color color = RAYWHITE;
+
+	int score = 0;
+
+	bool movement;
+	bool up;
+	bool right;
+};
+
+struct Ball
+{
+	Vector2 position;
+	Vector2 direction;
+	Color color = RAYWHITE;
+
+	int radius = 15;
+
+	bool up;
+	bool right;
+};
+
+struct PowerUp
+{
+	Rectangle rec;
+	PowerUps type;
+
+	int timer;
+	int timerGoal;
+
+	bool spawned;
+	bool active;
+	bool good;
+};
+
 int main(void)
 {
 	// Initialization
 	//--------------------------------------------------------------------------------------
-	const int screenWidth = 1360;
-	const int screenHeight = 768;
-
-	const int minPUSpawnTimer = 60 * 5;
-	const int maxPUSpawnTimer = 60 * 15;
-
-	const int paddleWidth = 20;
-	const int paddleHeight = 100;
-	const float paddleSpeed = 20.0f;
-	const float minIAPaddleSpeed = 4.0f;
-	const float maxIAPaddleSpeed = 9.0f;
-
-	const int minBallSpeed = 15;
-	const int maxBallSpeed = 20;
-
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
-
-	enum GameState
-	{
-		MainMenu,
-		SelectionMenu,
-		PvP,
-		PvIA,
-		EndGame
-	};
-
-	enum PowerUps
-	{
-		Bigger,
-		Smaller,
-		Speedier,
-		LessSpeedy,
-		Shield
-	};
-
-	struct Paddle
-	{
-		Rectangle rec;
-		Color color = RAYWHITE;
-
-		int score = 0;
-
-		bool movement;
-		bool up;
-		bool right;
-	};
-
-	struct Ball
-	{
-		Vector2 position;
-		Vector2 direction;
-		Color color = RAYWHITE;
-
-		int radius = 15;
-
-		bool up;
-		bool right;
-	};
-
-	struct PowerUp
-	{
-		Rectangle rec;
-		PowerUps type;
-
-		int timer;
-		int timerGoal;
-
-		bool spawned;
-		bool active;
-		bool good;
-	};
 
 	GameState currentState = GameState::MainMenu;
 	GameState selectedGameMode;
@@ -112,14 +109,14 @@ int main(void)
 	paddle1.rec.width = paddleWidth;
 	paddle1.rec.height = paddleHeight;
 	paddle1.rec.x = (float)(screenWidth / 20);
-	paddle1.rec.y = (float)((screenHeight - paddleHeight) / 2);
+	paddle1.rec.y = (float)(screenHeight / 2 - paddleHeight / 2);
 	int paddle1Color = 0;
 
 	Paddle paddle2;
 	paddle2.rec.width = paddleWidth;
 	paddle2.rec.height = paddleHeight;
 	paddle2.rec.x = (float)(screenWidth / 20 * 19 - paddleWidth);
-	paddle2.rec.y = (float)((screenHeight - paddleHeight) / 2);
+	paddle2.rec.y = (float)(screenHeight / 2 - paddleHeight / 2);
 	int paddle2Color = 0;
 
 	float IAPaddleSpeed = 5.0f;
@@ -134,12 +131,6 @@ int main(void)
 
 	Vector2 cursor;
 
-	Rectangle jugarButton;
-	jugarButton.width = 80;
-	jugarButton.height = 30;
-	jugarButton.x = screenWidth / 2 - 35;
-	jugarButton.y = screenHeight / 2 + 45;
-
 	Rectangle jVsJButton;
 	jVsJButton.width = 220;
 	jVsJButton.height = 30;
@@ -152,11 +143,48 @@ int main(void)
 	jVsIAButton.x = screenWidth / 2 - 70;
 	jVsIAButton.y = screenHeight / 2 + 80;
 
-	Rectangle volverButton;
-	volverButton.width = 95;
-	volverButton.height = 30;
-	volverButton.x = 10;
-	volverButton.y = 10;
+	Rectangle salirButton;
+	salirButton.width = 60;
+	salirButton.height = 30;
+	salirButton.x = screenWidth / 2 - 20;
+	salirButton.y = screenHeight / 2 + 115;
+
+	Rectangle jugarButton;
+	jugarButton.width = 80;
+	jugarButton.height = 30;
+	jugarButton.x = screenWidth / 2 - 35;
+	jugarButton.y = screenHeight / 2 + 45;
+
+	Rectangle volverAndPausaButton;
+	volverAndPausaButton.width = 95;
+	volverAndPausaButton.height = 30;
+	volverAndPausaButton.x = 10;
+	volverAndPausaButton.y = 10;
+
+	Rectangle pauseMenu;
+	pauseMenu.width = 315;
+	pauseMenu.height = 130;
+	pauseMenu.x = screenWidth / 2 - pauseMenu.width / 2;
+	pauseMenu.y = screenHeight / 2 - pauseMenu.height / 2;
+	bool pauseMenuActive = false;
+
+	Rectangle continuarButton;
+	continuarButton.width = 110;
+	continuarButton.height = 30;
+	continuarButton.x = screenWidth / 2 - continuarButton.width / 2;
+	continuarButton.y = screenHeight / 2 - continuarButton.height / 2 - ((pauseMenu.height - continuarButton.height * 3) / 4 + continuarButton.height);
+
+	Rectangle volverAlMdSButton;
+	volverAlMdSButton.width = 295;
+	volverAlMdSButton.height = 30;
+	volverAlMdSButton.x = screenWidth / 2 - volverAlMdSButton.width / 2;
+	volverAlMdSButton.y = screenHeight / 2 - volverAlMdSButton.height / 2;
+
+	Rectangle volverAlMPButton;
+	volverAlMPButton.width = 255;
+	volverAlMPButton.height = 30;
+	volverAlMPButton.x = screenWidth / 2 - volverAlMPButton.width / 2;
+	volverAlMPButton.y = screenHeight / 2 - volverAlMPButton.height / 2 + ((pauseMenu.height - volverAlMPButton.height * 3) / 4 + volverAlMPButton.height);
 
 	Rectangle arrowLP1;
 	arrowLP1.width = 20;
@@ -252,6 +280,23 @@ int main(void)
 						currentState = GameState::SelectionMenu;
 					}
 
+					//Salir
+					if ((cursor.x > salirButton.x && cursor.x < salirButton.x + salirButton.width)
+						&&
+						(cursor.y > salirButton.y && cursor.y < salirButton.y + salirButton.height))
+					{
+						DrawRectangle((int)salirButton.x, (int)salirButton.y, (int)salirButton.width, (int)salirButton.height, RAYWHITE);
+						DrawText("Salir", (int)salirButton.x + 5, (int)salirButton.y + 5, 20, BLACK);
+					}
+					else
+						DrawText("Salir", (int)salirButton.x + 5, (int)salirButton.y + 5, 20, RAYWHITE);
+					if (((cursor.x > salirButton.x && cursor.x < salirButton.x + salirButton.width)
+						&&
+						(cursor.y > salirButton.y && cursor.y < salirButton.y + salirButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+					{
+						CloseWindow();
+					}
+
 					EndDrawing();
 					ClearBackground(BLACK);
 				}
@@ -261,23 +306,28 @@ int main(void)
 
 			case GameState::SelectionMenu:
 			{
+				paddle1.rec.y = (float)(screenHeight / 2 - paddleHeight / 2);
+				paddle2.rec.y = (float)(screenHeight / 2 - paddleHeight / 2);
+				paddle1.score = 0;
+				paddle2.score = 0;
+
 				while (!WindowShouldClose() && currentState == GameState::SelectionMenu)
 				{
 					cursor = GetMousePosition();
 
 					//Volver
-					if ((cursor.x > volverButton.x && cursor.x < volverButton.x + volverButton.width)
+					if ((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 						&&
-						(cursor.y > volverButton.y && cursor.y < volverButton.y + volverButton.height))
+						(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height))
 					{
-						DrawRectangle((int)volverButton.x, (int)volverButton.y, (int)volverButton.width, (int)volverButton.height, RAYWHITE);
-						DrawText("< Volver", (int)volverButton.x + 5, (int)volverButton.y + 5, 20, BLACK);
+						DrawRectangle((int)volverAndPausaButton.x, (int)volverAndPausaButton.y, (int)volverAndPausaButton.width, (int)volverAndPausaButton.height, RAYWHITE);
+						DrawText("< Volver", (int)volverAndPausaButton.x + 5, (int)volverAndPausaButton.y + 5, 20, BLACK);
 					}
 					else
-						DrawText("< Volver", (int)volverButton.x + 5, (int)volverButton.y + 5, 20, RAYWHITE);
-					if (((cursor.x > volverButton.x && cursor.x < volverButton.x + volverButton.width)
+						DrawText("< Volver", (int)volverAndPausaButton.x + 5, (int)volverAndPausaButton.y + 5, 20, RAYWHITE);
+					if (((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 						&&
-						(cursor.y > volverButton.y && cursor.y < volverButton.y + volverButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+						(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 							currentState = GameState::MainMenu;
 
 					DrawText("Seleccionen el color de las paletas.", screenWidth / 2 - 175, screenHeight / 2 - 45, 20, RAYWHITE);
@@ -437,179 +487,182 @@ int main(void)
 					//----------------------------------------------------------------------------------
 					cursor = GetMousePosition();
 
-					//Volver
-					if ((cursor.x > volverButton.x && cursor.x < volverButton.x + volverButton.width)
+					//Pausa
+					if ((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 						&&
-						(cursor.y > volverButton.y && cursor.y < volverButton.y + volverButton.height))
+						(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height))
 					{
-						DrawRectangle((int)volverButton.x, (int)volverButton.y, (int)volverButton.width, (int)volverButton.height, RAYWHITE);
-						DrawText("< Volver", (int)volverButton.x + 5, (int)volverButton.y + 5, 20, BLACK);
+						DrawRectangle((int)volverAndPausaButton.x, (int)volverAndPausaButton.y, (int)volverAndPausaButton.width, (int)volverAndPausaButton.height, RAYWHITE);
+						DrawText("|| Pausa", (int)volverAndPausaButton.x + 5, (int)volverAndPausaButton.y + 5, 20, BLACK);
 					}
 					else
-						DrawText("< Volver", (int)volverButton.x + 5, (int)volverButton.y + 5, 20, RAYWHITE);
-					if (((cursor.x > volverButton.x && cursor.x < volverButton.x + volverButton.width)
+						DrawText("|| Pausa", (int)volverAndPausaButton.x + 5, (int)volverAndPausaButton.y + 5, 20, RAYWHITE);
+					if (((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 						&&
-						(cursor.y > volverButton.y && cursor.y < volverButton.y + volverButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-						currentState = GameState::MainMenu;
+						(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+						pauseMenuActive = true;
 
-					//Input de los jugadores
-					if (IsKeyDown(KEY_W) || (IsKeyDown(KEY_S)))
+					if (!pauseMenuActive)
 					{
-						paddle1.movement = true;
-
-						if (IsKeyDown(KEY_W))
+						//Input de los jugadores
+						if (IsKeyDown(KEY_W) || (IsKeyDown(KEY_S)))
 						{
-							paddle1.rec.y -= paddleSpeed;
-							paddle1.up = true;
-						}
-						if (IsKeyDown(KEY_S))
-						{
-							paddle1.rec.y += paddleSpeed;
-							paddle1.up = false;
-						}
-					}
-					else
-						paddle1.movement = false;
+							paddle1.movement = true;
 
-					if (IsKeyDown(KEY_UP) || (IsKeyDown(KEY_DOWN)))
-					{
-						paddle2.movement = true;
-
-						if (IsKeyDown(KEY_UP))
-						{
-							paddle2.rec.y -= paddleSpeed;
-							paddle2.up = true;
-						}
-						if (IsKeyDown(KEY_DOWN))
-						{
-							paddle2.rec.y += paddleSpeed;
-							paddle2.up = false;
-						}
-					}
-					else
-						paddle2.movement = false;
-					//----------------------------------------------------------------------------------
-
-					// Update
-					//----------------------------------------------------------------------------------
-					//Límites de las paletas
-					if (paddle1.rec.y < 0)
-						paddle1.rec.y = 0;
-					if (paddle1.rec.y + paddleHeight > screenHeight - 1)
-						paddle1.rec.y = (screenHeight - 1) - paddleHeight;
-					if (paddle2.rec.y < 0)
-						paddle2.rec.y = 0;
-					if (paddle2.rec.y + paddleHeight > screenHeight - 1)
-						paddle2.rec.y = (screenHeight - 1) - paddleHeight;
-
-					//Límites en y de la pelota
-					if (ball.position.y - ball.radius <= 0)
-						ball.up = false;
-					if (ball.position.y + ball.radius >= screenHeight - 1)
-						ball.up = true;
-
-					//Límites en x de la pelota
-					if (ball.position.x + ball.radius < 0 || ball.position.x - ball.radius > screenWidth - 1)
-					{
-						if (ball.position.x + ball.radius < 0)
-							paddle2.score++;
-						else
-							paddle1.score++;
-
-						point++;
-
-						ball.position = { screenWidth / 2, screenHeight / 2 };
-						ball.direction = { (float)GetRandomValue(minBallSpeed, maxBallSpeed - 1), (float)(maxBallSpeed - ball.direction.x) };
-
-						randomN = GetRandomValue(1, 2);
-						if (randomN == 1)
-							ball.up = true;
-						else
-							ball.up = false;
-
-						if (point % 2 == 0)
-							ball.right = true;
-						else
-							ball.right = false;
-					}
-
-					//Colisión entre pelota y paleta
-					if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle1.rec))
-					{
-						ball.right = true;
-
-						if (paddle1.movement)
-						{
-							if (!paddle1.up)
-								ball.up = true;
-							else
-								ball.up = false;
-						}
-
-						paddle1LTH = true;
-						ball.direction.x += 0.25f;
-						ball.color = paddle1.color;
-					}
-					if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle2.rec))
-					{
-						ball.right = false;
-
-						if (paddle2.movement)
-						{
-							if (!paddle2.up)
-								ball.up = true;
-							else
-								ball.up = false;
-						}
-
-						paddle1LTH = false;
-						ball.direction.x += 0.25f;
-						ball.color = paddle2.color;
-					}
-
-					//Movimiento de la pelota
-					if (ball.up)
-						ball.position.y -= ball.direction.y;
-					else
-						ball.position.y += ball.direction.y;
-					if (ball.right)
-						ball.position.x += ball.direction.x;
-					else
-						ball.position.x -= ball.direction.x;
-
-					//Power-Ups
-					if (!powerUp.spawned)
-					{
-						if (powerUp.timer == powerUp.timerGoal)
-						{
-							powerUp.spawned = true;
-							powerUp.timer = 0;
-							powerUp.timerGoal = 8;
-						}
-					}
-					else
-					{
-						if (!powerUp.active)
-						{
-							//Si la pelota colisiona con el PU -> active = true, timer = 0, timerGoal = 60 * 8
-
-							if (powerUp.timer == powerUp.timerGoal)
-								powerUp.spawned = false;
-						}
-						else
-						{
-							//Definir qué PU se activa
-							//Definir si es bueno o malo
-							//Aplicarlo al jugador que corresponda
-
-							if (powerUp.timer == powerUp.timerGoal)
+							if (IsKeyDown(KEY_W))
 							{
-
+								paddle1.rec.y -= paddleSpeed;
+								paddle1.up = true;
+							}
+							if (IsKeyDown(KEY_S))
+							{
+								paddle1.rec.y += paddleSpeed;
+								paddle1.up = false;
 							}
 						}
+						else
+							paddle1.movement = false;
+
+						if (IsKeyDown(KEY_UP) || (IsKeyDown(KEY_DOWN)))
+						{
+							paddle2.movement = true;
+
+							if (IsKeyDown(KEY_UP))
+							{
+								paddle2.rec.y -= paddleSpeed;
+								paddle2.up = true;
+							}
+							if (IsKeyDown(KEY_DOWN))
+							{
+								paddle2.rec.y += paddleSpeed;
+								paddle2.up = false;
+							}
+						}
+						else
+							paddle2.movement = false;
+						//----------------------------------------------------------------------------------
+
+						// Update
+						//----------------------------------------------------------------------------------
+						//Límites de las paletas
+						if (paddle1.rec.y < 0)
+							paddle1.rec.y = 0;
+						if (paddle1.rec.y + paddleHeight > screenHeight - 1)
+							paddle1.rec.y = (screenHeight - 1) - paddleHeight;
+						if (paddle2.rec.y < 0)
+							paddle2.rec.y = 0;
+						if (paddle2.rec.y + paddleHeight > screenHeight - 1)
+							paddle2.rec.y = (screenHeight - 1) - paddleHeight;
+
+						//Límites en y de la pelota
+						if (ball.position.y - ball.radius <= 0)
+							ball.up = false;
+						if (ball.position.y + ball.radius >= screenHeight - 1)
+							ball.up = true;
+
+						//Límites en x de la pelota
+						if (ball.position.x + ball.radius < 0 || ball.position.x - ball.radius > screenWidth - 1)
+						{
+							if (ball.position.x + ball.radius < 0)
+								paddle2.score++;
+							else
+								paddle1.score++;
+
+							point++;
+
+							ball.position = { screenWidth / 2, screenHeight / 2 };
+							ball.direction = { (float)GetRandomValue(minBallSpeed, maxBallSpeed - 1), (float)(maxBallSpeed - ball.direction.x) };
+
+							randomN = GetRandomValue(1, 2);
+							if (randomN == 1)
+								ball.up = true;
+							else
+								ball.up = false;
+
+							if (point % 2 == 0)
+								ball.right = true;
+							else
+								ball.right = false;
+						}
+
+						//Colisión entre pelota y paleta
+						if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle1.rec))
+						{
+							ball.right = true;
+
+							if (paddle1.movement)
+							{
+								if (!paddle1.up)
+									ball.up = true;
+								else
+									ball.up = false;
+							}
+
+							paddle1LTH = true;
+							ball.direction.x += 0.25f;
+							ball.color = paddle1.color;
+						}
+						if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle2.rec))
+						{
+							ball.right = false;
+
+							if (paddle2.movement)
+							{
+								if (!paddle2.up)
+									ball.up = true;
+								else
+									ball.up = false;
+							}
+
+							paddle1LTH = false;
+							ball.direction.x += 0.25f;
+							ball.color = paddle2.color;
+						}
+
+						//Movimiento de la pelota
+						if (ball.up)
+							ball.position.y -= ball.direction.y;
+						else
+							ball.position.y += ball.direction.y;
+						if (ball.right)
+							ball.position.x += ball.direction.x;
+						else
+							ball.position.x -= ball.direction.x;
+
+						//Power-Ups
+						if (!powerUp.spawned)
+						{
+							if (powerUp.timer == powerUp.timerGoal)
+							{
+								powerUp.spawned = true;
+								powerUp.timer = 0;
+								powerUp.timerGoal = 8;
+							}
+						}
+						else
+						{
+							if (!powerUp.active)
+							{
+								//Si la pelota colisiona con el PU -> active = true, timer = 0, timerGoal = 60 * 8
+
+								if (powerUp.timer == powerUp.timerGoal)
+									powerUp.spawned = false;
+							}
+							else
+							{
+								//Definir qué PU se activa
+								//Definir si es bueno o malo
+								//Aplicarlo al jugador que corresponda
+
+								if (powerUp.timer == powerUp.timerGoal)
+								{
+
+								}
+							}
+						}
+						powerUp.timer++;
+						//----------------------------------------------------------------------------------
 					}
-					powerUp.timer++;
-					//----------------------------------------------------------------------------------
 
 					// Draw
 					//----------------------------------------------------------------------------------
@@ -622,6 +675,63 @@ int main(void)
 
 					DrawCircleV(ball.position, (float)ball.radius, ball.color);
 
+					if (pauseMenuActive)
+					{
+						DrawRectangle(pauseMenu.x, pauseMenu.y, pauseMenu.width, pauseMenu.height, BLACK);
+						DrawRectangleLines(pauseMenu.x, pauseMenu.y, pauseMenu.width, pauseMenu.height, RAYWHITE);
+
+						//Continuar
+						if ((cursor.x > continuarButton.x && cursor.x < continuarButton.x + continuarButton.width)
+							&&
+							(cursor.y > continuarButton.y && cursor.y < continuarButton.y + continuarButton.height))
+						{
+							DrawRectangle((int)continuarButton.x, (int)continuarButton.y, (int)continuarButton.width, (int)continuarButton.height, RAYWHITE);
+							DrawText("Continuar", (int)continuarButton.x + 5, (int)continuarButton.y + 5, 20, BLACK);
+						}
+						else
+							DrawText("Continuar", (int)continuarButton.x + 5, (int)continuarButton.y + 5, 20, RAYWHITE);
+						if (((cursor.x > continuarButton.x && cursor.x < continuarButton.x + continuarButton.width)
+							&&
+							(cursor.y > continuarButton.y && cursor.y < continuarButton.y + continuarButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+							pauseMenuActive = false;
+
+						//Volver al menú de selección
+						if ((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
+							&&
+							(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height))
+						{
+							DrawRectangle((int)volverAlMdSButton.x, (int)volverAlMdSButton.y, (int)volverAlMdSButton.width, (int)volverAlMdSButton.height, RAYWHITE);
+							DrawText("Volver al menu de seleccion", (int)volverAlMdSButton.x + 5, (int)volverAlMdSButton.y + 5, 20, BLACK);
+						}
+						else
+							DrawText("Volver al menu de seleccion", (int)volverAlMdSButton.x + 5, (int)volverAlMdSButton.y + 5, 20, RAYWHITE);
+						if (((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
+							&&
+							(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+						{
+							pauseMenuActive = false;
+							currentState = GameState::SelectionMenu;
+						}
+
+						//Volver al menú principal
+						if ((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
+							&&
+							(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height))
+						{
+							DrawRectangle((int)volverAlMPButton.x, (int)volverAlMPButton.y, (int)volverAlMPButton.width, (int)volverAlMPButton.height, RAYWHITE);
+							DrawText("Volver al menu principal", (int)volverAlMPButton.x + 5, (int)volverAlMPButton.y + 5, 20, BLACK);
+						}
+						else
+							DrawText("Volver al menu principal", (int)volverAlMPButton.x + 5, (int)volverAlMPButton.y + 5, 20, RAYWHITE);
+						if (((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
+							&&
+							(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+						{
+							pauseMenuActive = false;
+							currentState = GameState::MainMenu;
+						}
+					}
+
 					EndDrawing();
 					ClearBackground(BLACK);
 					//----------------------------------------------------------------------------------
@@ -629,9 +739,8 @@ int main(void)
 
 				paddle1.score = 0;
 				paddle2.score = 0;
+				currentState = GameState::GameOver;
 
-				if (paddle1.score == 21 && paddle2.score == 21)
-					currentState = GameState::EndGame;
 				break;
 			}
 
@@ -643,144 +752,147 @@ int main(void)
 					//----------------------------------------------------------------------------------
 					cursor = GetMousePosition();
 
-					//Volver
-					if ((cursor.x > volverButton.x && cursor.x < volverButton.x + volverButton.width)
+					//Pausa
+					if ((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 						&&
-						(cursor.y > volverButton.y && cursor.y < volverButton.y + volverButton.height))
+						(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height))
 					{
-						DrawRectangle((int)volverButton.x, (int)volverButton.y, (int)volverButton.width, (int)volverButton.height, RAYWHITE);
-						DrawText("< Volver", (int)volverButton.x + 5, (int)volverButton.y + 5, 20, BLACK);
+						DrawRectangle((int)volverAndPausaButton.x, (int)volverAndPausaButton.y, (int)volverAndPausaButton.width, (int)volverAndPausaButton.height, RAYWHITE);
+						DrawText("|| Pausa", (int)volverAndPausaButton.x + 5, (int)volverAndPausaButton.y + 5, 20, BLACK);
 					}
 					else
-						DrawText("< Volver", (int)volverButton.x + 5, (int)volverButton.y + 5, 20, RAYWHITE);
-					if (((cursor.x > volverButton.x && cursor.x < volverButton.x + volverButton.width)
+						DrawText("|| Pausa", (int)volverAndPausaButton.x + 5, (int)volverAndPausaButton.y + 5, 20, RAYWHITE);
+					if (((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 						&&
-						(cursor.y > volverButton.y && cursor.y < volverButton.y + volverButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-						currentState = GameState::MainMenu;
+						(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+						pauseMenuActive = true;
 
-					//Input del jugador
-					if (IsKeyDown(KEY_W) || (IsKeyDown(KEY_S)))
+					if (!pauseMenuActive)
 					{
-						paddle1.movement = true;
+						//Input del jugador
+						if (IsKeyDown(KEY_W) || (IsKeyDown(KEY_S)))
+						{
+							paddle1.movement = true;
 
-						if (IsKeyDown(KEY_W))
-						{
-							paddle1.rec.y -= paddleSpeed;
-							paddle1.up = true;
-						}
-						if (IsKeyDown(KEY_S))
-						{
-							paddle1.rec.y += paddleSpeed;
-							paddle1.up = false;
-						}
-					}
-					else
-						paddle1.movement = false;
-					//----------------------------------------------------------------------------------
-
-					// Update
-					//----------------------------------------------------------------------------------
-					//Movimiento de la IA
-					if (ball.position.x > (screenWidth - 1) / 2)
-					{
-						if (ball.up)
-						{
-							if (paddle2.rec.y > ball.position.y)
-								paddle2.rec.y -= IAPaddleSpeed;
+							if (IsKeyDown(KEY_W))
+							{
+								paddle1.rec.y -= paddleSpeed;
+								paddle1.up = true;
+							}
+							if (IsKeyDown(KEY_S))
+							{
+								paddle1.rec.y += paddleSpeed;
+								paddle1.up = false;
+							}
 						}
 						else
+							paddle1.movement = false;
+						//----------------------------------------------------------------------------------
+
+						// Update
+						//----------------------------------------------------------------------------------
+						//Movimiento de la IA
+						if (ball.position.x > (screenWidth - 1) / 2)
 						{
-							if (paddle2.rec.y < ball.position.y)
-								paddle2.rec.y += IAPaddleSpeed;
+							if (ball.up)
+							{
+								if (paddle2.rec.y > ball.position.y)
+									paddle2.rec.y -= IAPaddleSpeed;
+							}
+							else
+							{
+								if (paddle2.rec.y < ball.position.y)
+									paddle2.rec.y += IAPaddleSpeed;
+							}
 						}
-					}
 
-					//Límites de las paletas
-					if (paddle1.rec.y < 0)
-						paddle1.rec.y = 0;
-					if (paddle1.rec.y + paddleHeight > screenHeight - 1)
-						paddle1.rec.y = (screenHeight - 1) - paddleHeight;
-					if (paddle2.rec.y < 0)
-						paddle2.rec.y = 0;
-					if (paddle2.rec.y + paddleHeight > screenHeight - 1)
-						paddle2.rec.y = (screenHeight - 1) - paddleHeight;
+						//Límites de las paletas
+						if (paddle1.rec.y < 0)
+							paddle1.rec.y = 0;
+						if (paddle1.rec.y + paddleHeight > screenHeight - 1)
+							paddle1.rec.y = (screenHeight - 1) - paddleHeight;
+						if (paddle2.rec.y < 0)
+							paddle2.rec.y = 0;
+						if (paddle2.rec.y + paddleHeight > screenHeight - 1)
+							paddle2.rec.y = (screenHeight - 1) - paddleHeight;
 
-					//Límites en y de la pelota
-					if (ball.position.y - ball.radius <= 0)
-						ball.up = false;
-					if (ball.position.y + ball.radius >= screenHeight - 1)
-						ball.up = true;
-
-					//Límites en x de la pelota
-					if (ball.position.x + ball.radius < 0 || ball.position.x - ball.radius > screenWidth - 1)
-					{
-						if (ball.position.x + ball.radius < 0)
-							paddle2.score++;
-						else
-							paddle1.score++;
-
-						point++;
-
-						ball.position = { screenWidth / 2, screenHeight / 2 };
-						ball.direction = { (float)GetRandomValue(minBallSpeed, maxBallSpeed - 1), (float)(maxBallSpeed - ball.direction.x) };
-						IAPaddleSpeed = (float)GetRandomValue((int)minIAPaddleSpeed, (int)maxIAPaddleSpeed);
-
-						randomN = GetRandomValue(1, 2);
-						if (randomN == 1)
-							ball.up = true;
-						else
+						//Límites en y de la pelota
+						if (ball.position.y - ball.radius <= 0)
 							ball.up = false;
+						if (ball.position.y + ball.radius >= screenHeight - 1)
+							ball.up = true;
 
-						if (point % 2 == 0)
+						//Límites en x de la pelota
+						if (ball.position.x + ball.radius < 0 || ball.position.x - ball.radius > screenWidth - 1)
+						{
+							if (ball.position.x + ball.radius < 0)
+								paddle2.score++;
+							else
+								paddle1.score++;
+
+							point++;
+
+							ball.position = { screenWidth / 2, screenHeight / 2 };
+							ball.direction = { (float)GetRandomValue(minBallSpeed, maxBallSpeed - 1), (float)(maxBallSpeed - ball.direction.x) };
+							IAPaddleSpeed = (float)GetRandomValue((int)minIAPaddleSpeed, (int)maxIAPaddleSpeed);
+
+							randomN = GetRandomValue(1, 2);
+							if (randomN == 1)
+								ball.up = true;
+							else
+								ball.up = false;
+
+							if (point % 2 == 0)
+								ball.right = true;
+							else
+								ball.right = false;
+						}
+
+						//Colisión entre pelota y paleta
+						if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle1.rec))
+						{
 							ball.right = true;
-						else
+
+							if (paddle1.movement)
+							{
+								if (!paddle1.up)
+									ball.up = true;
+								else
+									ball.up = false;
+							}
+
+							paddle1LTH = true;
+							ball.direction.x += 0.25f;
+							ball.color = paddle1.color;
+						}
+						if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle2.rec))
+						{
 							ball.right = false;
-					}
 
-					//Colisión entre pelota y paleta
-					if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle1.rec))
-					{
-						ball.right = true;
+							if (paddle2.movement)
+							{
+								if (!paddle2.up)
+									ball.up = true;
+								else
+									ball.up = false;
+							}
 
-						if (paddle1.movement)
-						{
-							if (!paddle1.up)
-								ball.up = true;
-							else
-								ball.up = false;
+							paddle1LTH = false;
+							ball.direction.x += 0.25f;
+							ball.color = paddle2.color;
 						}
 
-						paddle1LTH = true;
-						ball.direction.x += 0.25f;
-						ball.color = paddle1.color;
+						//Movimiento de la pelota
+						if (ball.up)
+							ball.position.y -= ball.direction.y;
+						else
+							ball.position.y += ball.direction.y;
+						if (ball.right)
+							ball.position.x += ball.direction.x;
+						else
+							ball.position.x -= ball.direction.x;
+						//----------------------------------------------------------------------------------
 					}
-					if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, (float)ball.radius, paddle2.rec))
-					{
-						ball.right = false;
-
-						if (paddle2.movement)
-						{
-							if (!paddle2.up)
-								ball.up = true;
-							else
-								ball.up = false;
-						}
-
-						paddle1LTH = false;
-						ball.direction.x += 0.25f;
-						ball.color = paddle2.color;
-					}
-
-					//Movimiento de la pelota
-					if (ball.up)
-						ball.position.y -= ball.direction.y;
-					else
-						ball.position.y += ball.direction.y;
-					if (ball.right)
-						ball.position.x += ball.direction.x;
-					else
-						ball.position.x -= ball.direction.x;
-					//----------------------------------------------------------------------------------
 
 					// Draw
 					//----------------------------------------------------------------------------------
@@ -793,6 +905,63 @@ int main(void)
 
 					DrawCircleV(ball.position, (float)ball.radius, ball.color);
 
+					if (pauseMenuActive)
+					{
+						DrawRectangle(pauseMenu.x, pauseMenu.y, pauseMenu.width, pauseMenu.height, BLACK);
+						DrawRectangleLines(pauseMenu.x, pauseMenu.y, pauseMenu.width, pauseMenu.height, RAYWHITE);
+
+						//Continuar
+						if ((cursor.x > continuarButton.x && cursor.x < continuarButton.x + continuarButton.width)
+							&&
+							(cursor.y > continuarButton.y && cursor.y < continuarButton.y + continuarButton.height))
+						{
+							DrawRectangle((int)continuarButton.x, (int)continuarButton.y, (int)continuarButton.width, (int)continuarButton.height, RAYWHITE);
+							DrawText("Continuar", (int)continuarButton.x + 5, (int)continuarButton.y + 5, 20, BLACK);
+						}
+						else
+							DrawText("Continuar", (int)continuarButton.x + 5, (int)continuarButton.y + 5, 20, RAYWHITE);
+						if (((cursor.x > continuarButton.x && cursor.x < continuarButton.x + continuarButton.width)
+							&&
+							(cursor.y > continuarButton.y && cursor.y < continuarButton.y + continuarButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+							pauseMenuActive = false;
+
+						//Volver al menú de selección
+						if ((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
+							&&
+							(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height))
+						{
+							DrawRectangle((int)volverAlMdSButton.x, (int)volverAlMdSButton.y, (int)volverAlMdSButton.width, (int)volverAlMdSButton.height, RAYWHITE);
+							DrawText("Volver al menu de seleccion", (int)volverAlMdSButton.x + 5, (int)volverAlMdSButton.y + 5, 20, BLACK);
+						}
+						else
+							DrawText("Volver al menu de seleccion", (int)volverAlMdSButton.x + 5, (int)volverAlMdSButton.y + 5, 20, RAYWHITE);
+						if (((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
+							&&
+							(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+						{
+							pauseMenuActive = false;
+							currentState = GameState::SelectionMenu;
+						}
+
+						//Volver al menú principal
+						if ((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
+							&&
+							(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height))
+						{
+							DrawRectangle((int)volverAlMPButton.x, (int)volverAlMPButton.y, (int)volverAlMPButton.width, (int)volverAlMPButton.height, RAYWHITE);
+							DrawText("Volver al menu principal", (int)volverAlMPButton.x + 5, (int)volverAlMPButton.y + 5, 20, BLACK);
+						}
+						else
+							DrawText("Volver al menu principal", (int)volverAlMPButton.x + 5, (int)volverAlMPButton.y + 5, 20, RAYWHITE);
+						if (((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
+							&&
+							(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+						{
+							pauseMenuActive = false;
+							currentState = GameState::MainMenu;
+						}
+					}
+
 					EndDrawing();
 					ClearBackground(BLACK);
 					//----------------------------------------------------------------------------------
@@ -802,30 +971,61 @@ int main(void)
 				paddle2.score = 0;
 
 				if (paddle1.score == 21 && paddle2.score == 21)
-					currentState = GameState::EndGame;
+					currentState = GameState::GameOver;
 				break;
 			}
 
-			case GameState::EndGame:
+			case GameState::GameOver:
 			{
-				while (!WindowShouldClose() && !enterPressed)
+				while (!WindowShouldClose() && currentState == GameState::GameOver)
 				{
-					if (paddle1.score == 21)
-						DrawText("HA GANADO EL JUGADOR 1!", screenWidth / 2 - 175, screenHeight / 2, 20, RAYWHITE);
-					else
-						DrawText("HA GANADO EL JUGADOR 2!", screenWidth / 2 - 200, screenHeight / 2 - 20, 20, RAYWHITE);
-					DrawText("Presiona Enter para volver al menu principal.", screenWidth / 2 - 200, screenHeight / 2 + 20, 20, RAYWHITE);
+					cursor = GetMousePosition();
 
-					if (IsKeyPressed(KEY_ENTER))
-						enterPressed = true;
+					if (paddle1.score == 21)
+						DrawText("HA GANADO EL JUGADOR 1!", screenWidth / 2 - 140, screenHeight / 2 - 50, 20, RAYWHITE);
+					else
+						DrawText("HA GANADO EL JUGADOR 2!", screenWidth / 2 - 140, screenHeight / 2 - 50, 20, RAYWHITE);
+					
+					//Volver a jugar
+					if ((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
+						&&
+						(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height))
+					{
+						DrawRectangle((int)volverAlMdSButton.x, (int)volverAlMdSButton.y, (int)volverAlMdSButton.width, (int)volverAlMdSButton.height, RAYWHITE);
+						DrawText("Volver a jugar", (int)volverAlMdSButton.x + 70, (int)volverAlMdSButton.y + 5, 20, BLACK);
+					}
+					else
+						DrawText("Volver a jugar", (int)volverAlMdSButton.x + 70, (int)volverAlMdSButton.y + 5, 20, RAYWHITE);
+					if (((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
+						&&
+						(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+					{
+						pauseMenuActive = false;
+						currentState = GameState::SelectionMenu;
+					}
+
+					//Volver al menú principal
+					if ((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
+						&&
+						(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height))
+					{
+						DrawRectangle((int)volverAlMPButton.x, (int)volverAlMPButton.y, (int)volverAlMPButton.width, (int)volverAlMPButton.height, RAYWHITE);
+						DrawText("Volver al menu principal", (int)volverAlMPButton.x + 5, (int)volverAlMPButton.y + 5, 20, BLACK);
+					}
+					else
+						DrawText("Volver al menu principal", (int)volverAlMPButton.x + 5, (int)volverAlMPButton.y + 5, 20, RAYWHITE);
+					if (((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
+						&&
+						(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+					{
+						pauseMenuActive = false;
+						currentState = GameState::MainMenu;
+					}
 
 					EndDrawing();
 					ClearBackground(BLACK);
 				}
 
-				enterPressed = false;
-
-				currentState = GameState::MainMenu;
 				break;
 			}
 		}
