@@ -10,15 +10,72 @@
     <Filter Include="Archivos de origen">
       <UniqueIdentifier>{2ad9afab-f000-420b-9f1a-14372e110a7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de recursos\main">
+      <UniqueIdentifier>{aa921445-1c80-4d78-b5c5-18b48dc0ce98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\main\Game">
+      <UniqueIdentifier>{2c985d09-26f8-413d-a299-5707df022d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\main\Game\Gameplay">
+      <UniqueIdentifier>{a2287a82-d67f-4d44-b7cd-9307b19ba92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\lib">
+      <UniqueIdentifier>{c7f7d686-6f5b-444f-a260-7488e236aed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\main">
+      <UniqueIdentifier>{34496ad1-71ed-4c42-9481-c3f2dfcbe4e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\main\Game">
+      <UniqueIdentifier>{275a651d-51ff-4f7f-adc7-f210e150fee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\main\Game\Gameplay">
+      <UniqueIdentifier>{3b682893-1508-492f-8924-09801bfcb813}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game.cpp">
+      <Filter>Archivos de recursos\main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game Over.cpp">
+      <Filter>Archivos de recursos\main\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay.cpp">
+      <Filter>Archivos de recursos\main\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Main Menu.cpp">
+      <Filter>Archivos de recursos\main\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Ball.cpp">
+      <Filter>Archivos de recursos\main\Game\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Paddles.cpp">
+      <Filter>Archivos de recursos\main\Game\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\include\raylib.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\lib</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\Source.cpp">
-      <Filter>Archivos de recursos</Filter>
-    </ClCompile>
+    <ClInclude Include="..\src\Game.h">
+      <Filter>Archivos de encabezado\main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Main Menu.h">
+      <Filter>Archivos de encabezado\main\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay.h">
+      <Filter>Archivos de encabezado\main\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game Over.h">
+      <Filter>Archivos de encabezado\main\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Ball.h">
+      <Filter>Archivos de encabezado\main\Game\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Paddles.h">
+      <Filter>Archivos de encabezado\main\Game\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
