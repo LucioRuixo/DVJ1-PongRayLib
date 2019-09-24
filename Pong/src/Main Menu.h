@@ -1,8 +1,6 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
-#include "Game.h"
-
-void MainMenu();
+void ExeMainMenu();
 
 #endif

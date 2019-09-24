@@ -1,7 +1,7 @@
 #ifndef PADDLES_H
 #define PADDLES_H
 
-#include "Game.h"
+#include "raylib.h"
 
 struct Paddle
 {
@@ -16,11 +16,10 @@ struct Paddle
 	bool right;
 };
 
-Paddle paddle1;
-Paddle paddle2;
+extern Paddle paddle1;
+extern Paddle paddle2;
 
-int IAPaddleSpeed = 5;
-bool paddle1LTH = true; //LTH = Last To Hit
+extern int IAPaddleSpeed;
 
 //----------------------------------------------------------------
 

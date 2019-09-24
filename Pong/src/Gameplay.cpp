@@ -1,8 +1,9 @@
+#include "Game.h"
 #include "Gameplay.h"
-#include "Ball.h"
 #include "Paddles.h"
+#include "Ball.h"
 
-void Gameplay()
+void ExeGameplay()
 {
 	switch (currentState)
 	{
@@ -255,7 +256,7 @@ void Gameplay()
 					(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 				{
 					pauseMenuActive = false;
-					currentState = GameState::MainMenu_Enum;
+					currentState = GameState::MainMenu;
 				}
 			}
 
@@ -266,7 +267,7 @@ void Gameplay()
 
 		paddle1.score = 0;
 		paddle2.score = 0;
-		currentState = GameState::GameOver_Enum;
+		currentState = GameState::GameOver;
 
 		break;
 	}
@@ -485,7 +486,7 @@ void Gameplay()
 					(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 				{
 					pauseMenuActive = false;
-					currentState = GameState::MainMenu_Enum;
+					currentState = GameState::MainMenu;
 				}
 			}
 
@@ -498,7 +499,7 @@ void Gameplay()
 		paddle2.score = 0;
 
 		if (paddle1.score == 21 && paddle2.score == 21)
-			currentState = GameState::GameOver_Enum;
+			currentState = GameState::GameOver;
 		break;
 	}
 

@@ -2,14 +2,65 @@
 #include "Main Menu.h"
 #include "Gameplay.h"
 #include "Game Over.h"
-#include "Paddles.h"
 #include "Ball.h"
+#include "Paddles.h"
 
+GameState currentState;
+GameState selectedGameMode;
+
+PowerUp powerUp;
+//powerUp.good = (GetRandomValue(1, 2) == 1);
+
+Vector2 cursor;
+
+Rectangle jVsJButton;
+
+Rectangle jVsIAButton;
+
+Rectangle salirButton;
+
+Rectangle jugarButton;
+
+Rectangle volverAndPausaButton;
+
+Rectangle pauseMenu;
+bool pauseMenuActive;
+
+Rectangle continuarButton;
+
+Rectangle volverAlMdSButton;
+
+Rectangle volverAlMPButton;
+
+Rectangle arrowLP1;
+Rectangle arrowRP1;
+Rectangle arrowLP2;
+Rectangle arrowRP2;
+
+int randomN;
+int point;
+
+bool enterPressed;
+bool paddle1LTH;
+
+//----------------------------------------------------------------
+
+static void InitGame();
+
+namespace Game
+{
 void Game()
 {
 	// Initialization
 	//--------------------------------------------------------------------------------------
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
+
+	InitGame();
+	InitPaddle(paddle1);
+	paddle1.rec.x = (float)(screenWidth / 20);
+	InitPaddle(paddle2);
+	paddle2.rec.x = (float)(screenWidth / 20 * 19 - paddleWidth);
+	InitBall();
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
@@ -19,26 +70,21 @@ void Game()
 	{
 		BeginDrawing();
 
-		InitGame();
-		InitPaddle(paddle1);
-		InitPaddle(paddle2);
-		InitBall();
-
 		switch (currentState)
 		{
-		case GameState::MainMenu_Enum:
+		case GameState::MainMenu:
 		case GameState::SelectionMenu:
 		{
-			MainMenu();
+			ExeMainMenu();
 		}
 		case GameState::PvP:
 		case GameState::PvIA:
 		{
-			Gameplay();
+			ExeGameplay();
 		}
-		case GameState::GameOver_Enum:
+		case GameState::GameOver:
 		{
-			GameOver();
+			ExeGameOver();
 		}
 		}
 
@@ -50,9 +96,12 @@ void Game()
 	CloseWindow();           // Close window and OpenGL context
 	//--------------------------------------------------------------------------------------
 }
+}
 
-void InitGame()
+static void InitGame()
 {
+	currentState = GameState::MainMenu;
+
 	jVsJButton.width = 220;
 	jVsJButton.height = 30;
 	jVsJButton.x = screenWidth / 2 - 100;
@@ -82,6 +131,7 @@ void InitGame()
 	pauseMenu.height = 130;
 	pauseMenu.x = screenWidth / 2 - pauseMenu.width / 2;
 	pauseMenu.y = screenHeight / 2 - pauseMenu.height / 2;
+	pauseMenuActive = false;
 
 	continuarButton.width = 110;
 	continuarButton.height = 30;
@@ -117,4 +167,9 @@ void InitGame()
 	arrowRP2.height = 40;
 	arrowRP2.x = paddle2.rec.x + paddle2.rec.width + 20;
 	arrowRP2.y = (paddle2.rec.y + paddleHeight / 2) - 20;
+
+	IAPaddleSpeed = 5;
+
+	paddle1LTH = true; //LTH = Last To Hit
+	enterPressed = false;
 }

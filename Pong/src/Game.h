@@ -2,8 +2,6 @@
 #define GAME_H
 
 #include "raylib.h"
-#include "Ball.h"
-#include "Paddles.h"
 
 const int screenWidth = 1300;
 const int screenHeight = 700;
@@ -17,11 +15,11 @@ const int maxIAPaddleSpeed = 9;
 
 enum GameState
 {
-	MainMenu_Enum,
+	MainMenu,
 	SelectionMenu,
 	PvP,
 	PvIA,
-	GameOver_Enum
+	GameOver
 };
 
 enum PowerUps
@@ -46,44 +44,48 @@ struct PowerUp
 	bool good;
 };
 
-GameState currentState = GameState::MainMenu_Enum;
-GameState selectedGameMode;
+extern GameState currentState;
+extern GameState selectedGameMode;
 
-PowerUp powerUp;
+extern PowerUp powerUp;
 //powerUp.good = (GetRandomValue(1, 2) == 1);
 
-Vector2 cursor;
+extern Vector2 cursor;
 
-Rectangle jVsJButton;
+extern Rectangle jVsJButton;
 
-Rectangle jVsIAButton;
+extern Rectangle jVsIAButton;
 
-Rectangle salirButton;
+extern Rectangle salirButton;
 
-Rectangle jugarButton;
+extern Rectangle jugarButton;
 
-Rectangle volverAndPausaButton;
+extern Rectangle volverAndPausaButton;
 
-Rectangle pauseMenu;
-bool pauseMenuActive = false;
+extern Rectangle pauseMenu;
+extern bool pauseMenuActive;
 
-Rectangle continuarButton;
+extern Rectangle continuarButton;
 
-Rectangle volverAlMdSButton;
+extern Rectangle volverAlMdSButton;
 
-Rectangle volverAlMPButton;
+extern Rectangle volverAlMPButton;
 
-Rectangle arrowLP1;
-Rectangle arrowRP1;
-Rectangle arrowLP2;
-Rectangle arrowRP2;
+extern Rectangle arrowLP1;
+extern Rectangle arrowRP1;
+extern Rectangle arrowLP2;
+extern Rectangle arrowRP2;
 
-int randomN = GetRandomValue(1, 2);
-int point = randomN;
+extern int randomN;
+extern int point;
 
-bool enterPressed = false;
+extern bool enterPressed;
+extern bool paddle1LTH;
 
+//----------------------------------------------------------------
+namespace Game
+{
 void Game();
-void InitGame();
+}
 
 #endif

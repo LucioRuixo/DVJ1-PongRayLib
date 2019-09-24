@@ -1,12 +1,14 @@
+#include "Game.h"
 #include "Game Over.h"
+#include "Paddles.h"
 
-void GameOver()
+void ExeGameOver()
 {
 	switch (currentState)
 	{
-	case GameState::GameOver_Enum:
+	case GameState::GameOver:
 	{
-		while (!WindowShouldClose() && currentState == GameState::GameOver_Enum)
+		while (!WindowShouldClose() && currentState == GameState::GameOver)
 		{
 			cursor = GetMousePosition();
 
@@ -48,7 +50,7 @@ void GameOver()
 				(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
 				pauseMenuActive = false;
-				currentState = GameState::MainMenu_Enum;
+				currentState = GameState::MainMenu;
 			}
 
 			EndDrawing();

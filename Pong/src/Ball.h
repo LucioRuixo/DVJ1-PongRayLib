@@ -1,7 +1,7 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include "Game.h"
+#include "raylib.h"
 
 const int minBallSpeed = 15;
 const int maxBallSpeed = 20;
@@ -10,15 +10,15 @@ struct Ball
 {
 	Vector2 position;
 	Vector2 direction;
-	Color color = RAYWHITE;
+	Color color;
 
-	int radius = 15;
+	int radius;
 
 	bool up;
 	bool right;
 };
 
-Ball ball;
+extern Ball ball;
 
 //----------------------------------------------------------------
 

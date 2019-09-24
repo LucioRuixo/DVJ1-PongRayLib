@@ -1,13 +1,14 @@
+#include "Game.h"
 #include "Main Menu.h"
 #include "Paddles.h"
 
-void MainMenu()
+void ExeMainMenu()
 {
 	switch (currentState)
 	{
-	case GameState::MainMenu_Enum:
+	case GameState::MainMenu:
 	{
-		while (!WindowShouldClose() && currentState == GameState::MainMenu_Enum)
+		while (!WindowShouldClose() && currentState == GameState::MainMenu)
 		{
 			cursor = GetMousePosition();
 
@@ -100,7 +101,7 @@ void MainMenu()
 			if (((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 				&&
 				(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-				currentState = GameState::MainMenu_Enum;
+				currentState = GameState::MainMenu;
 
 			DrawText("Seleccionen el color de las paletas.", screenWidth / 2 - 175, screenHeight / 2 - 45, 20, RAYWHITE);
 
