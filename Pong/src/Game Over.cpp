@@ -4,9 +4,9 @@ void GameOver()
 {
 	switch (currentState)
 	{
-	case GameState::GameOver:
+	case GameState::GameOver_Enum:
 	{
-		while (!WindowShouldClose() && currentState == GameState::GameOver)
+		while (!WindowShouldClose() && currentState == GameState::GameOver_Enum)
 		{
 			cursor = GetMousePosition();
 
@@ -48,7 +48,7 @@ void GameOver()
 				(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
 				pauseMenuActive = false;
-				currentState = GameState::MainMenu;
+				currentState = GameState::MainMenu_Enum;
 			}
 
 			EndDrawing();

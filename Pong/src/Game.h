@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include "raylib.h"
+#include "Ball.h"
+#include "Paddles.h"
 
 const int screenWidth = 1300;
 const int screenHeight = 700;
@@ -15,11 +17,11 @@ const int maxIAPaddleSpeed = 9;
 
 enum GameState
 {
-	MainMenu,
+	MainMenu_Enum,
 	SelectionMenu,
 	PvP,
 	PvIA,
-	GameOver
+	GameOver_Enum
 };
 
 enum PowerUps
@@ -44,7 +46,7 @@ struct PowerUp
 	bool good;
 };
 
-GameState currentState = GameState::MainMenu;
+GameState currentState = GameState::MainMenu_Enum;
 GameState selectedGameMode;
 
 PowerUp powerUp;

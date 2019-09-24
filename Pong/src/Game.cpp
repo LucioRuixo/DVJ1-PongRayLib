@@ -26,7 +26,7 @@ void Game()
 
 		switch (currentState)
 		{
-		case GameState::MainMenu:
+		case GameState::MainMenu_Enum:
 		case GameState::SelectionMenu:
 		{
 			MainMenu();
@@ -36,7 +36,7 @@ void Game()
 		{
 			Gameplay();
 		}
-		case GameState::GameOver:
+		case GameState::GameOver_Enum:
 		{
 			GameOver();
 		}

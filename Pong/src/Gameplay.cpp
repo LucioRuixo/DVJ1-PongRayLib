@@ -255,7 +255,7 @@ void Gameplay()
 					(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 				{
 					pauseMenuActive = false;
-					currentState = GameState::MainMenu;
+					currentState = GameState::MainMenu_Enum;
 				}
 			}
 
@@ -266,7 +266,7 @@ void Gameplay()
 
 		paddle1.score = 0;
 		paddle2.score = 0;
-		currentState = GameState::GameOver;
+		currentState = GameState::GameOver_Enum;
 
 		break;
 	}
@@ -485,7 +485,7 @@ void Gameplay()
 					(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 				{
 					pauseMenuActive = false;
-					currentState = GameState::MainMenu;
+					currentState = GameState::MainMenu_Enum;
 				}
 			}
 
@@ -498,7 +498,7 @@ void Gameplay()
 		paddle2.score = 0;
 
 		if (paddle1.score == 21 && paddle2.score == 21)
-			currentState = GameState::GameOver;
+			currentState = GameState::GameOver_Enum;
 		break;
 	}
 

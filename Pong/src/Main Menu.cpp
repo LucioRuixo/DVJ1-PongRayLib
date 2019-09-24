@@ -5,9 +5,9 @@ void MainMenu()
 {
 	switch (currentState)
 	{
-	case GameState::MainMenu:
+	case GameState::MainMenu_Enum:
 	{
-		while (!WindowShouldClose() && currentState == GameState::MainMenu)
+		while (!WindowShouldClose() && currentState == GameState::MainMenu_Enum)
 		{
 			cursor = GetMousePosition();
 
@@ -100,7 +100,7 @@ void MainMenu()
 			if (((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
 				&&
 				(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-				currentState = GameState::MainMenu;
+				currentState = GameState::MainMenu_Enum;
 
 			DrawText("Seleccionen el color de las paletas.", screenWidth / 2 - 175, screenHeight / 2 - 45, 20, RAYWHITE);
 
