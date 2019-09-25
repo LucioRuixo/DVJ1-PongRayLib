@@ -1,10 +1,13 @@
 #include "Game.h"
 #include "Gameplay.h"
-#include "Paddles.h"
 #include "Ball.h"
+#include "Buttons.h"
+#include "Paddles.h"
 
 void ExeGameplay()
 {
+	InitGameplayButtons(jugarButton, volverAndPausaButton, pauseMenu, continuarButton, volverAlMdSButton, volverAlMPButton);
+
 	switch (currentState)
 	{
 	case GameState::PvP:

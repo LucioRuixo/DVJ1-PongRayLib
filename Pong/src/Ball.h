@@ -22,6 +22,6 @@ extern Ball ball;
 
 //----------------------------------------------------------------
 
-void InitBall();
+void InitBall(Ball &ball);
 
 #endif

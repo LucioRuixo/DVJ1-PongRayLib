@@ -1,9 +1,12 @@
 #include "Game.h"
 #include "Game Over.h"
+#include "Buttons.h"
 #include "Paddles.h"
 
 void ExeGameOver()
 {
+	InitGameOverButtons(volverAlMdSButton, volverAlMPButton);
+
 	switch (currentState)
 	{
 	case GameState::GameOver:

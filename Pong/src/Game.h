@@ -52,40 +52,17 @@ extern PowerUp powerUp;
 
 extern Vector2 cursor;
 
-extern Rectangle jVsJButton;
-
-extern Rectangle jVsIAButton;
-
-extern Rectangle salirButton;
-
-extern Rectangle jugarButton;
-
-extern Rectangle volverAndPausaButton;
-
-extern Rectangle pauseMenu;
-extern bool pauseMenuActive;
-
-extern Rectangle continuarButton;
-
-extern Rectangle volverAlMdSButton;
-
-extern Rectangle volverAlMPButton;
-
-extern Rectangle arrowLP1;
-extern Rectangle arrowRP1;
-extern Rectangle arrowLP2;
-extern Rectangle arrowRP2;
-
 extern int randomN;
 extern int point;
 
+extern bool pauseMenuActive;
 extern bool enterPressed;
 extern bool paddle1LTH;
 
 //----------------------------------------------------------------
 namespace Game
 {
-void Game();
+void ExeGame();
 }
 
 #endif

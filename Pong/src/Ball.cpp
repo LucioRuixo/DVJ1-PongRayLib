@@ -1,11 +1,12 @@
-#include "Game.h"
 #include "Ball.h"
+
+#include "Game.h"
 
 Ball ball;
 
 //----------------------------------------------------------------
 
-void InitBall()
+void InitBall(Ball &ball)
 {
 	ball.position = { (float)screenWidth / 2, (float)screenHeight / 2 };
 	ball.direction.x = (float)GetRandomValue(minBallSpeed, maxBallSpeed - 1); ball.direction.y = (float)(maxBallSpeed - ball.direction.x);

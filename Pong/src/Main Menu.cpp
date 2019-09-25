@@ -1,9 +1,19 @@
-#include "Game.h"
 #include "Main Menu.h"
+
+#include "Game.h"
+#include "Ball.h"
+#include "Buttons.h"
 #include "Paddles.h"
 
 void ExeMainMenu()
 {
+	paddle1 = InitPaddle();
+	paddle1.rec.x = (float)(screenWidth / 20);
+	paddle2 = InitPaddle();
+	paddle2.rec.x = (float)(screenWidth / 20 * 19 - paddleWidth);
+	InitBall(ball);
+	InitMainMenuButtons(jVsJButton, jVsIAButton, salirButton, arrowLP1, arrowRP1, arrowLP2, arrowRP2);
+
 	switch (currentState)
 	{
 	case GameState::MainMenu:
@@ -79,11 +89,6 @@ void ExeMainMenu()
 
 	case GameState::SelectionMenu:
 	{
-		InitPaddle(paddle1);
-		InitPaddle(paddle2);
-		paddle1.score = 0;
-		paddle2.score = 0;
-
 		while (!WindowShouldClose() && currentState == GameState::SelectionMenu)
 		{
 			cursor = GetMousePosition();
@@ -129,6 +134,10 @@ void ExeMainMenu()
 				else
 					currentState = GameState::PvIA;
 			}
+
+			//Paletas
+			DrawRectangleV({ paddle1.rec.x, paddle1.rec.y }, { paddleWidth, paddleHeight }, paddle1.color);
+			DrawRectangleV({ paddle2.rec.x, paddle2.rec.y }, { paddleWidth, paddleHeight }, paddle2.color);
 
 			//Flechas
 			DrawTriangle(
@@ -240,10 +249,6 @@ void ExeMainMenu()
 				paddle2.color = PURPLE;
 				break;
 			}
-
-			//Paletas
-			DrawRectangleV({ paddle1.rec.x, paddle1.rec.y }, { paddleWidth, paddleHeight }, paddle1.color);
-			DrawRectangleV({ paddle2.rec.x, paddle2.rec.y }, { paddleWidth, paddleHeight }, paddle2.color);
 
 			EndDrawing();
 			ClearBackground(BLACK);

@@ -1,5 +1,5 @@
-#ifndef GAMEOVER_H
-#define GAMEOVER_H
+#ifndef GAME_OVER_H
+#define GAME_OVER_H
 
 void ExeGameOver();
 

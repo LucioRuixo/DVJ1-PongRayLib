@@ -16,9 +16,6 @@
     <Filter Include="Archivos de recursos\main\Game">
       <UniqueIdentifier>{2c985d09-26f8-413d-a299-5707df022d2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de recursos\main\Game\Gameplay">
-      <UniqueIdentifier>{a2287a82-d67f-4d44-b7cd-9307b19ba92c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de encabezado\lib">
       <UniqueIdentifier>{c7f7d686-6f5b-444f-a260-7488e236aed4}</UniqueIdentifier>
     </Filter>
@@ -28,8 +25,17 @@
     <Filter Include="Archivos de encabezado\main\Game">
       <UniqueIdentifier>{275a651d-51ff-4f7f-adc7-f210e150fee1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de encabezado\main\Game\Gameplay">
-      <UniqueIdentifier>{3b682893-1508-492f-8924-09801bfcb813}</UniqueIdentifier>
+    <Filter Include="Archivos de encabezado\main\Game\Scenes">
+      <UniqueIdentifier>{7570d8d4-10ab-4e55-828c-fb0728315ccb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\main\Game\Elements">
+      <UniqueIdentifier>{fe17e67a-1162-4eeb-952f-eca371c397af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\main\Game\Scenes">
+      <UniqueIdentifier>{b68f6809-4d89-4f03-a065-ba3abf91b129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\main\Game\Elements">
+      <UniqueIdentifier>{b5c22e3c-8d1c-4d6c-974c-34dca302e917}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,42 +46,48 @@
       <Filter>Archivos de recursos\main</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Game Over.cpp">
-      <Filter>Archivos de recursos\main\Game</Filter>
+      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Gameplay.cpp">
-      <Filter>Archivos de recursos\main\Game</Filter>
+      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Main Menu.cpp">
-      <Filter>Archivos de recursos\main\Game</Filter>
+      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Ball.cpp">
-      <Filter>Archivos de recursos\main\Game\Gameplay</Filter>
+      <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Paddles.cpp">
-      <Filter>Archivos de recursos\main\Game\Gameplay</Filter>
+      <Filter>Archivos de recursos\main\Game\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Buttons.cpp">
+      <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\include\raylib.h">
       <Filter>Archivos de encabezado\lib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Game.h">
-      <Filter>Archivos de encabezado\main</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Main Menu.h">
-      <Filter>Archivos de encabezado\main\Game</Filter>
+    <ClInclude Include="..\src\Game Over.h">
+      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Gameplay.h">
-      <Filter>Archivos de encabezado\main\Game</Filter>
+      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Game Over.h">
-      <Filter>Archivos de encabezado\main\Game</Filter>
+    <ClInclude Include="..\src\Main Menu.h">
+      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Ball.h">
-      <Filter>Archivos de encabezado\main\Game\Gameplay</Filter>
+      <Filter>Archivos de encabezado\main\Game\Elements</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Paddles.h">
-      <Filter>Archivos de encabezado\main\Game\Gameplay</Filter>
+      <Filter>Archivos de encabezado\main\Game\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Buttons.h">
+      <Filter>Archivos de encabezado\main\Game\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game.h">
+      <Filter>Archivos de encabezado\main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

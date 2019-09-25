@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\include;$(SolutionDir)src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -121,7 +121,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\include;$(SolutionDir)src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="..\lib\include\raylib.h" />
     <ClInclude Include="..\src\Ball.h" />
+    <ClInclude Include="..\src\Buttons.h" />
     <ClInclude Include="..\src\Game Over.h" />
     <ClInclude Include="..\src\Game.h" />
     <ClInclude Include="..\src\Gameplay.h" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Ball.cpp" />
+    <ClCompile Include="..\src\Buttons.cpp" />
     <ClCompile Include="..\src\Game Over.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
     <ClCompile Include="..\src\Gameplay.cpp" />

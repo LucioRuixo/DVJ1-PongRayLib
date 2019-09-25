@@ -23,6 +23,6 @@ extern int IAPaddleSpeed;
 
 //----------------------------------------------------------------
 
-void InitPaddle(Paddle paddle);
+Paddle InitPaddle();
 
 #endif
