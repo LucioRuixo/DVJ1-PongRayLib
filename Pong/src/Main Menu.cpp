@@ -12,7 +12,7 @@ void ExeMainMenu()
 	paddle2 = InitPaddle();
 	paddle2.rec.x = (float)(screenWidth / 20 * 19 - paddleWidth);
 	InitBall(ball);
-	InitMainMenuButtons(jVsJButton, jVsIAButton, salirButton, arrowLP1, arrowRP1, arrowLP2, arrowRP2);
+	InitMainMenuButtons(pantallaCompletaButton, jVsJButton, jVsIAButton, salirButton, jugarButton, volverAndPausaButton, arrowLP1, arrowRP1, arrowLP2, arrowRP2);
 
 	switch (currentState)
 	{
@@ -26,6 +26,23 @@ void ExeMainMenu()
 			DrawText("Controles P1: W & S", screenWidth / 2 - 175, screenHeight / 2 - 45, 20, RAYWHITE);
 			DrawText("Controles P2: flechas Arriba y Abajo", screenWidth / 2 - 175, screenHeight / 2 - 20, 20, RAYWHITE);
 			DrawText("El primero que llegue a 21 puntos gana.", screenWidth / 2 - 175, screenHeight / 2 + 5, 20, RAYWHITE);
+
+			//Pantalla completa
+			if ((cursor.x > pantallaCompletaButton.x && cursor.x < pantallaCompletaButton.x + pantallaCompletaButton.width)
+				&&
+				(cursor.y > pantallaCompletaButton.y && cursor.y < pantallaCompletaButton.y + pantallaCompletaButton.height))
+			{
+				DrawRectangle((int)pantallaCompletaButton.x, (int)pantallaCompletaButton.y, (int)pantallaCompletaButton.width, (int)pantallaCompletaButton.height, RAYWHITE);
+				DrawText("Pantalla completa", (int)pantallaCompletaButton.x + 5, (int)pantallaCompletaButton.y + 5, 20, BLACK);
+			}
+			else
+				DrawText("Pantalla completa", (int)pantallaCompletaButton.x + 5, (int)pantallaCompletaButton.y + 5, 20, RAYWHITE);
+			if (((cursor.x > pantallaCompletaButton.x && cursor.x < pantallaCompletaButton.x + pantallaCompletaButton.width)
+				&&
+				(cursor.y > pantallaCompletaButton.y && cursor.y < pantallaCompletaButton.y + pantallaCompletaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				ToggleFullscreen();
+			}
 
 			//Jugador vs. Jugador
 			if ((cursor.x > jVsJButton.x && cursor.x < jVsJButton.x + jVsJButton.width)

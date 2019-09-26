@@ -21,6 +21,8 @@ extern Paddle paddle2;
 
 extern int IAPaddleSpeed;
 
+extern bool paddle1LastToHit;
+
 //----------------------------------------------------------------
 
 Paddle InitPaddle();

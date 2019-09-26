@@ -3,8 +3,6 @@
 
 #include "raylib.h"
 
-const int screenWidth = 1300;
-const int screenHeight = 700;
 const int minPUSpawnTimer = 60 * 5;
 const int maxPUSpawnTimer = 60 * 15;
 const int paddleWidth = 20;
@@ -54,6 +52,9 @@ extern Vector2 cursor;
 
 extern int randomN;
 extern int point;
+
+extern float screenWidth;
+extern float screenHeight;
 
 extern bool pauseMenuActive;
 extern bool enterPressed;

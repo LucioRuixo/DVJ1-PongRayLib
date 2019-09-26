@@ -1,0 +1,4 @@
+Terminar power-ups.
+Agregar sonido.
+Arreglar opción de pantalla completa (conseguir que RayLib devuelva la resolución del monitor).
+Reemplazar casteos por "static_cast<tipo de dato>(variable)".

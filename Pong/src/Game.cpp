@@ -3,7 +3,6 @@
 #include "Game Over.h"
 #include "Gameplay.h"
 #include "Main Menu.h"
-#include "Buttons.h"
 #include "Paddles.h"
 
 GameState currentState;
@@ -16,6 +15,9 @@ Vector2 cursor;
 
 int randomN;
 int point;
+
+float screenWidth;
+float screenHeight;
 
 bool pauseMenuActive;
 bool enterPressed;
@@ -31,9 +33,9 @@ void ExeGame()
 {
 	// Initialization
 	//--------------------------------------------------------------------------------------
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
-
 	InitGame();
+
+	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
@@ -77,6 +79,9 @@ static void InitGame()
 
 	IAPaddleSpeed = 5;
 
-	paddle1LTH = true; //LTH = Last To Hit
+	screenWidth = 1360;
+	screenHeight = 730;
+
+	paddle1LastToHit = false;
 	enterPressed = false;
 }

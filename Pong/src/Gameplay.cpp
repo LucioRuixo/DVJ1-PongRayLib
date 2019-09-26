@@ -12,7 +12,7 @@ void ExeGameplay()
 	{
 	case GameState::PvP:
 	{
-		while (!WindowShouldClose() && currentState == GameState::PvP && (paddle1.score < 21 && paddle2.score < 21))
+		while (!WindowShouldClose() && currentState == GameState::PvP && (paddle1.score < 11 && paddle2.score < 11))
 		{
 			//Input
 			//----------------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void ExeGameplay()
 
 			// Draw
 			//----------------------------------------------------------------------------------
-			DrawText("Objetivo: 21 pts.", screenWidth / 2 - 50, 10, 20, RAYWHITE);
+			DrawText("Objetivo: 11 pts.", screenWidth / 2 - 50, 10, 20, RAYWHITE);
 			DrawText(TextFormat("%i", paddle1.score), 10, 40, 50, RAYWHITE);
 			DrawText(TextFormat("%i", paddle2.score), screenWidth - 50, 40, 50, RAYWHITE);
 
@@ -267,17 +267,16 @@ void ExeGameplay()
 			ClearBackground(BLACK);
 			//----------------------------------------------------------------------------------
 		}
-
-		paddle1.score = 0;
-		paddle2.score = 0;
-		currentState = GameState::GameOver;
+		
+		if (paddle1.score >= 11 || paddle2.score >= 11)
+			currentState = GameState::GameOver;
 
 		break;
 	}
 
 	case GameState::PvIA:
 	{
-		while (!WindowShouldClose() && currentState == GameState::PvIA && (paddle1.score < 21 && paddle2.score < 21))
+		while (!WindowShouldClose() && currentState == GameState::PvIA && (paddle1.score < 11 && paddle2.score < 11))
 		{
 			//Input
 			//----------------------------------------------------------------------------------
@@ -427,7 +426,7 @@ void ExeGameplay()
 
 			// Draw
 			//----------------------------------------------------------------------------------
-			DrawText("Objetivo: 21 pts.", screenWidth / 2 - 50, 10, 20, RAYWHITE);
+			DrawText("Objetivo: 11 pts.", screenWidth / 2 - 50, 10, 20, RAYWHITE);
 			DrawText(TextFormat("%i", paddle1.score), 10, 40, 50, RAYWHITE);
 			DrawText(TextFormat("%i", paddle2.score), screenWidth - 50, 40, 50, RAYWHITE);
 
@@ -497,14 +496,11 @@ void ExeGameplay()
 			ClearBackground(BLACK);
 			//----------------------------------------------------------------------------------
 		}
-
-		paddle1.score = 0;
-		paddle2.score = 0;
-
-		if (paddle1.score == 21 && paddle2.score == 21)
+		
+		if (paddle1.score >= 11 || paddle2.score >= 11)
 			currentState = GameState::GameOver;
+
 		break;
 	}
-
 	}
 }

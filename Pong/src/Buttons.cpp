@@ -3,22 +3,15 @@
 #include "Game.h"
 #include "Paddles.h"
 
+Rectangle pantallaCompletaButton;
 Rectangle jVsJButton;
-
 Rectangle jVsIAButton;
-
 Rectangle salirButton;
-
 Rectangle jugarButton;
-
 Rectangle volverAndPausaButton;
-
 Rectangle pauseMenu;
-
 Rectangle continuarButton;
-
 Rectangle volverAlMdSButton;
-
 Rectangle volverAlMPButton;
 
 Rectangle arrowLP1;
@@ -28,9 +21,14 @@ Rectangle arrowRP2;
 
 //----------------------------------------------------------------
 
-void InitMainMenuButtons(Rectangle &jVsJButton, Rectangle &jVsIAButton, Rectangle &salirButton, Rectangle &arrowLP1, Rectangle &arrowRP1, Rectangle &arrowLP2, Rectangle &arrowRP2)
+void InitMainMenuButtons(Rectangle &pantallaCompletaButton, Rectangle &jVsJButton, Rectangle &jVsIAButton, Rectangle &salirButton, Rectangle &jugarButton, Rectangle &volverAndPausaButton, Rectangle &arrowLP1, Rectangle &arrowRP1, Rectangle &arrowLP2, Rectangle &arrowRP2)
 {
 	//Botones
+	pantallaCompletaButton.width = 190;
+	pantallaCompletaButton.height = 30;
+	pantallaCompletaButton.x = screenWidth - pantallaCompletaButton.width - 10;
+	pantallaCompletaButton.y = 10;
+
 	jVsJButton.width = 220;
 	jVsJButton.height = 30;
 	jVsJButton.x = screenWidth / 2 - 100;

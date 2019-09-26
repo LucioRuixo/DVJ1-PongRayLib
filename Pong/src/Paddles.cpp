@@ -7,6 +7,8 @@ Paddle paddle2;
 
 int IAPaddleSpeed;
 
+bool paddle1LastToHit;
+
 //----------------------------------------------------------------
 
 Paddle InitPaddle()
