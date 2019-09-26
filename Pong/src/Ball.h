@@ -3,8 +3,8 @@
 
 #include "raylib.h"
 
-const int minBallSpeed = 15;
-const int maxBallSpeed = 20;
+const float minBallSpeed = 15;
+const float maxBallSpeed = 20;
 
 struct Ball
 {

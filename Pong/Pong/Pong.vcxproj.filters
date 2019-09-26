@@ -48,9 +48,6 @@
     <ClCompile Include="..\src\Game Over.cpp">
       <Filter>Archivos de recursos\main\Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Gameplay.cpp">
-      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Main Menu.cpp">
       <Filter>Archivos de recursos\main\Game\Scenes</Filter>
     </ClCompile>
@@ -63,15 +60,21 @@
     <ClCompile Include="..\src\Buttons.cpp">
       <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Selection Menu.cpp">
+      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay_PvP.cpp">
+      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay_PvAI.cpp">
+      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\include\raylib.h">
       <Filter>Archivos de encabezado\lib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Game Over.h">
-      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Gameplay.h">
       <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Main Menu.h">
@@ -88,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="..\src\Game.h">
       <Filter>Archivos de encabezado\main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Selection Menu.h">
+      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay_PvAI.h">
+      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay_PvP.h">
+      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

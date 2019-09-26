@@ -17,7 +17,7 @@ Paddle InitPaddle()
 
 	paddle.rec.width = paddleWidth;
 	paddle.rec.height = paddleHeight;
-	paddle.rec.y = (float)(screenHeight / 2 - paddleHeight / 2);
+	paddle.rec.y = screenHeight / 2 - paddleHeight / 2;
 	paddle.color = RAYWHITE;
 	paddle.colorCode = 0;
 	paddle.score = 0;

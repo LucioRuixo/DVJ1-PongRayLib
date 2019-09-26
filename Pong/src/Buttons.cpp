@@ -21,7 +21,7 @@ Rectangle arrowRP2;
 
 //----------------------------------------------------------------
 
-void InitMainMenuButtons(Rectangle &pantallaCompletaButton, Rectangle &jVsJButton, Rectangle &jVsIAButton, Rectangle &salirButton, Rectangle &jugarButton, Rectangle &volverAndPausaButton, Rectangle &arrowLP1, Rectangle &arrowRP1, Rectangle &arrowLP2, Rectangle &arrowRP2)
+void InitMainMenuButtons(Rectangle &pantallaCompletaButton, Rectangle &jVsJButton, Rectangle &jVsIAButton, Rectangle &salirButton)
 {
 	//Botones
 	pantallaCompletaButton.width = 190;
@@ -43,7 +43,11 @@ void InitMainMenuButtons(Rectangle &pantallaCompletaButton, Rectangle &jVsJButto
 	salirButton.height = 30;
 	salirButton.x = screenWidth / 2 - 20;
 	salirButton.y = screenHeight / 2 + 115;
+}
 
+void InitSelectionMenuButtons(Rectangle &jugarButton, Rectangle &volverAndPausaButton, Rectangle &arrowLP1, Rectangle &arrowRP1, Rectangle &arrowLP2, Rectangle &arrowRP2)
+{
+	//Botones
 	jugarButton.width = 80;
 	jugarButton.height = 30;
 	jugarButton.x = screenWidth / 2 - 35;
@@ -55,7 +59,6 @@ void InitMainMenuButtons(Rectangle &pantallaCompletaButton, Rectangle &jVsJButto
 	volverAndPausaButton.y = 10;
 
 	//Flechas
-	
 	arrowLP1.width = 20;
 	arrowLP1.height = 40;
 	arrowLP1.x = paddle1.rec.x - 40;

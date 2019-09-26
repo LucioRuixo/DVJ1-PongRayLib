@@ -1,6 +1,9 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 
-void ExeMainMenu();
+namespace Main_Menu
+{
+void Execute();
+}
 
 #endif

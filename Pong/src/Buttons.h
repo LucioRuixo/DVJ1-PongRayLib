@@ -21,7 +21,8 @@ extern Rectangle arrowRP2;
 
 //----------------------------------------------------------------
 
-void InitMainMenuButtons(Rectangle &pantallaCompletaButton, Rectangle &jVsJButton, Rectangle &jVsIAButton, Rectangle &salirButton, Rectangle &jugarButton, Rectangle &volverAndPausaButton, Rectangle &arrowLP1, Rectangle &arrowRP1, Rectangle &arrowLP2, Rectangle &arrowRP2);
+void InitMainMenuButtons(Rectangle &pantallaCompletaButton, Rectangle &jVsJButton, Rectangle &jVsIAButton, Rectangle &salirButton);
+void InitSelectionMenuButtons(Rectangle &jugarButton, Rectangle &volverAndPausaButton, Rectangle &arrowLP1, Rectangle &arrowRP1, Rectangle &arrowLP2, Rectangle &arrowRP2);
 void InitGameplayButtons(Rectangle &jugarButton, Rectangle &volverAndPausaButton, Rectangle &pauseMenu, Rectangle &continuarButton, Rectangle &volverAlMdSButton, Rectangle &volverAlMPButton);
 void InitGameOverButtons(Rectangle &volverAlMdSButton, Rectangle &volverAlMPButton);
 

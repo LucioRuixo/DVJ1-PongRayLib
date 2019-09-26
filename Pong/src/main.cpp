@@ -2,6 +2,7 @@
 
 int main()
 {
-	Game::ExeGame();
+	Game_::Execute();
+
 	return 0;
 }

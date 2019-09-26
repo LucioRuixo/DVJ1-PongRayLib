@@ -156,19 +156,23 @@
     <ClInclude Include="..\src\Buttons.h" />
     <ClInclude Include="..\src\Game Over.h" />
     <ClInclude Include="..\src\Game.h" />
-    <ClInclude Include="..\src\Gameplay.h" />
+    <ClInclude Include="..\src\Gameplay_PvP.h" />
+    <ClInclude Include="..\src\Gameplay_PvAI.h" />
     <ClInclude Include="..\src\Main Menu.h" />
     <ClInclude Include="..\src\Paddles.h" />
+    <ClInclude Include="..\src\Selection Menu.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Ball.cpp" />
     <ClCompile Include="..\src\Buttons.cpp" />
     <ClCompile Include="..\src\Game Over.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
-    <ClCompile Include="..\src\Gameplay.cpp" />
+    <ClCompile Include="..\src\Gameplay_PvAI.cpp" />
+    <ClCompile Include="..\src\Gameplay_PvP.cpp" />
     <ClCompile Include="..\src\Main Menu.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Paddles.cpp" />
+    <ClCompile Include="..\src\Selection Menu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

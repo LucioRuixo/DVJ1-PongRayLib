@@ -3,13 +3,15 @@
 
 #include "raylib.h"
 
-const int minPUSpawnTimer = 60 * 5;
-const int maxPUSpawnTimer = 60 * 15;
+const int paddleSpeed = 20;
 const int paddleWidth = 20;
 const int paddleHeight = 100;
-const int paddleSpeed = 20;
-const int minIAPaddleSpeed = 4;
-const int maxIAPaddleSpeed = 9;
+const int powerUpMinSpawnTimer = 60 * 5;
+const int powerUpMaxSpawnTimer = 60 * 15;
+const int screenWidth = 1280;
+const int screenHeight = 720;
+const int iAMinPaddleSpeed = 4;
+const int iAMaxPaddleSpeed = 9;
 
 enum GameState
 {
@@ -53,17 +55,14 @@ extern Vector2 cursor;
 extern int randomN;
 extern int point;
 
-extern float screenWidth;
-extern float screenHeight;
-
 extern bool pauseMenuActive;
 extern bool enterPressed;
 extern bool paddle1LTH;
 
 //----------------------------------------------------------------
-namespace Game
+namespace Game_
 {
-void ExeGame();
+void Execute();
 }
 
 #endif

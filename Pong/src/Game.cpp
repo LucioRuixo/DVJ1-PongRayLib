@@ -1,8 +1,10 @@
 #include "Game.h"
 
 #include "Game Over.h"
-#include "Gameplay.h"
+#include "Gameplay_PvAI.h"
+#include "Gameplay_PvP.h"
 #include "Main Menu.h"
+#include "Selection Menu.h"
 #include "Paddles.h"
 
 GameState currentState;
@@ -16,9 +18,6 @@ Vector2 cursor;
 int randomN;
 int point;
 
-float screenWidth;
-float screenHeight;
-
 bool pauseMenuActive;
 bool enterPressed;
 bool paddle1LTH;
@@ -27,49 +26,47 @@ bool paddle1LTH;
 
 static void InitGame();
 
-namespace Game
+namespace Game_
 {
-void ExeGame()
+void Execute()
 {
-	// Initialization
-	//--------------------------------------------------------------------------------------
 	InitGame();
-
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
 
-	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-	//--------------------------------------------------------------------------------------
+	SetTargetFPS(60);
 
-	// Main game loop
-	while (!WindowShouldClose())    // Detect window close button or ESC key
+	while (!WindowShouldClose())
 	{
 		BeginDrawing();
 
 		switch (currentState)
 		{
 		case GameState::MainMenu:
+		{
+			Main_Menu::Execute();
+		}
 		case GameState::SelectionMenu:
 		{
-			ExeMainMenu();
+			Selection_Menu::Execute();
 		}
 		case GameState::PvP:
+		{
+			Gameplay_PvP::Execute();
+		}
 		case GameState::PvIA:
 		{
-			ExeGameplay();
+			Gameplay_PvAI::Execute();
 		}
 		case GameState::GameOver:
 		{
-			ExeGameOver();
+			Game_Over::Execute();
 		}
 		}
 
 		EndDrawing();
 	}
 
-	// De-Initialization
-	//--------------------------------------------------------------------------------------
-	CloseWindow();           // Close window and OpenGL context
-	//--------------------------------------------------------------------------------------
+	CloseWindow();
 }
 }
 
@@ -78,9 +75,6 @@ static void InitGame()
 	currentState = GameState::MainMenu;
 
 	IAPaddleSpeed = 5;
-
-	screenWidth = 1360;
-	screenHeight = 730;
 
 	paddle1LastToHit = false;
 	enterPressed = false;
