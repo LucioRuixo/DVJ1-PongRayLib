@@ -5,6 +5,7 @@
 #include "Gameplay_PvP.h"
 #include "Main Menu.h"
 #include "Selection Menu.h"
+#include "Buttons.h"
 #include "Paddles.h"
 
 GameState currentState;
@@ -18,19 +19,19 @@ Vector2 cursor;
 int randomN;
 int point;
 
-bool pauseMenuActive;
+bool pauseState;
 bool enterPressed;
 bool paddle1LTH;
 
 //----------------------------------------------------------------
 
-static void InitGame();
-
 namespace Game_
 {
+static void Init();
+
 void Execute()
 {
-	InitGame();
+	Init();
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
 
 	SetTargetFPS(60);
@@ -53,7 +54,7 @@ void Execute()
 		{
 			Gameplay_PvP::Execute();
 		}
-		case GameState::PvIA:
+		case GameState::PvAI:
 		{
 			Gameplay_PvAI::Execute();
 		}
@@ -68,14 +69,19 @@ void Execute()
 
 	CloseWindow();
 }
-}
 
-static void InitGame()
+static void Init()
 {
 	currentState = GameState::MainMenu;
 
 	IAPaddleSpeed = 5;
 
 	paddle1LastToHit = false;
+	pauseState = false;
 	enterPressed = false;
+
+	InitMainMenuButtons(jugadorVsIA, jugadorVsJugador, pantallaCompleta, salir);
+	InitSelectionMenuButtons(jugar, volver);
+	InitGameplayAndGameOverButtons(continuar, pausa, pauseMenu, volverAlMenuDeSeleccion, volverAlMenuPrincipal);
+}
 }

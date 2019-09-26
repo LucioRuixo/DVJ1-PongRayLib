@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\include\raylib.h" />
+    <ClInclude Include="..\src\Arrows.h" />
     <ClInclude Include="..\src\Ball.h" />
     <ClInclude Include="..\src\Buttons.h" />
     <ClInclude Include="..\src\Game Over.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="..\src\Selection Menu.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Arrows.cpp" />
     <ClCompile Include="..\src\Ball.cpp" />
     <ClCompile Include="..\src\Buttons.cpp" />
     <ClCompile Include="..\src\Game Over.cpp" />

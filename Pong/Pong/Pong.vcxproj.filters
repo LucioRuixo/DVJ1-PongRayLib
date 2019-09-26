@@ -25,17 +25,17 @@
     <Filter Include="Archivos de encabezado\main\Game">
       <UniqueIdentifier>{275a651d-51ff-4f7f-adc7-f210e150fee1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de encabezado\main\Game\Scenes">
-      <UniqueIdentifier>{7570d8d4-10ab-4e55-828c-fb0728315ccb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de encabezado\main\Game\Elements">
       <UniqueIdentifier>{fe17e67a-1162-4eeb-952f-eca371c397af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de recursos\main\Game\Scenes">
-      <UniqueIdentifier>{b68f6809-4d89-4f03-a065-ba3abf91b129}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de recursos\main\Game\Elements">
       <UniqueIdentifier>{b5c22e3c-8d1c-4d6c-974c-34dca302e917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\main\Game\States">
+      <UniqueIdentifier>{b68f6809-4d89-4f03-a065-ba3abf91b129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\main\Game\States">
+      <UniqueIdentifier>{7570d8d4-10ab-4e55-828c-fb0728315ccb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,10 +46,10 @@
       <Filter>Archivos de recursos\main</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Game Over.cpp">
-      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+      <Filter>Archivos de recursos\main\Game\States</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Main Menu.cpp">
-      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+      <Filter>Archivos de recursos\main\Game\States</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Ball.cpp">
       <Filter>Archivos de recursos\main\Game\Elements</Filter>
@@ -61,13 +61,16 @@
       <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Selection Menu.cpp">
-      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+      <Filter>Archivos de recursos\main\Game\States</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Gameplay_PvP.cpp">
-      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+      <Filter>Archivos de recursos\main\Game\States</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Gameplay_PvAI.cpp">
-      <Filter>Archivos de recursos\main\Game\Scenes</Filter>
+      <Filter>Archivos de recursos\main\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Arrows.cpp">
+      <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,10 +78,10 @@
       <Filter>Archivos de encabezado\lib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Game Over.h">
-      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Main Menu.h">
-      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Ball.h">
       <Filter>Archivos de encabezado\main\Game\Elements</Filter>
@@ -93,13 +96,16 @@
       <Filter>Archivos de encabezado\main</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Selection Menu.h">
-      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Gameplay_PvAI.h">
-      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Gameplay_PvP.h">
-      <Filter>Archivos de encabezado\main\Game\Scenes</Filter>
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Arrows.h">
+      <Filter>Archivos de encabezado\main\Game\Elements</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,7 +28,6 @@ void Execute()
 
 static void Init()
 {
-	InitSelectionMenuButtons(jugarButton, volverAndPausaButton, arrowLP1, arrowRP1, arrowLP2, arrowRP2);
 	paddle1 = InitPaddle();
 	paddle1.rec.x = screenWidth / 20;
 	paddle2 = InitPaddle();
@@ -39,48 +38,10 @@ static void Update()
 {
 	cursor = GetMousePosition();
 
-	//Volver
-	if ((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
-		&&
-		(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height))
-	{
-		DrawRectangle(static_cast<int>(volverAndPausaButton.x), static_cast<int>(volverAndPausaButton.y), static_cast<int>(volverAndPausaButton.width), static_cast<int>(volverAndPausaButton.height), RAYWHITE);
-		DrawText("< Volver", static_cast<int>(volverAndPausaButton.x + 5), static_cast<int>(volverAndPausaButton.y + 5), 20, BLACK);
-	}
-	else
-		DrawText("< Volver", static_cast<int>(volverAndPausaButton.x + 5), static_cast<int>(volverAndPausaButton.y + 5), 20, RAYWHITE);
-	if (((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
-		&&
-		(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		currentState = GameState::MainMenu;
+	GenerateButton(volver);
 
-	DrawText("Seleccionen el color de las paletas.", screenWidth / 2 - 175, screenHeight / 2 - 45, 20, RAYWHITE);
-
-	//JUGAR
-	if ((cursor.x > jugarButton.x && cursor.x < jugarButton.x + jugarButton.width)
-		&&
-		(cursor.y > jugarButton.y && cursor.y < jugarButton.y + jugarButton.height))
-	{
-		DrawRectangle(static_cast<int>(jugarButton.x), static_cast<int>(jugarButton.y), static_cast<int>(jugarButton.width), static_cast<int>(jugarButton.height), RAYWHITE);
-		DrawText("JUGAR", static_cast<int>(jugarButton.x + 5), static_cast<int>(jugarButton.y + 5), 20, BLACK);
-	}
-	else
-		DrawText("JUGAR", static_cast<int>(jugarButton.x + 5), static_cast<int>(jugarButton.y + 5), 20, RAYWHITE);
-	if (((cursor.x > jugarButton.x && cursor.x < jugarButton.x + jugarButton.width)
-		&&
-		(cursor.y > jugarButton.y && cursor.y < jugarButton.y + jugarButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-	{
-		powerUp.spawned = false;
-		powerUp.active = false;
-		powerUp.timer = 0;
-		powerUp.timerGoal = GetRandomValue(powerUpMinSpawnTimer, powerUpMaxSpawnTimer);
-
-		if (selectedGameMode == GameState::PvP)
-			currentState = GameState::PvP;
-		else
-			currentState = GameState::PvIA;
-	}
-
+	GenerateButton(jugar);
+	/*
 	//Flechas
 	if (((cursor.x > arrowLP1.x && cursor.x < arrowLP1.x + arrowLP1.width)
 		&&
@@ -120,7 +81,7 @@ static void Update()
 			paddle2.colorCode++;
 		else
 			paddle2.colorCode = 0;
-	}
+	}*/
 
 	switch (paddle1.colorCode)
 	{
@@ -175,6 +136,8 @@ static void Update()
 
 static void Draw()
 {
+	DrawText("Seleccionen el color de las paletas.", screenWidth / 2 - 175, screenHeight / 2 - 45, 20, RAYWHITE);
+
 	//Paletas
 	DrawRectangleV({ paddle1.rec.x, paddle1.rec.y }, { paddleWidth, paddleHeight }, paddle1.color);
 	DrawRectangleV({ paddle2.rec.x, paddle2.rec.y }, { paddleWidth, paddleHeight }, paddle2.color);

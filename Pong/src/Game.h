@@ -18,7 +18,7 @@ enum GameState
 	MainMenu,
 	SelectionMenu,
 	PvP,
-	PvIA,
+	PvAI,
 	GameOver
 };
 
@@ -55,7 +55,7 @@ extern Vector2 cursor;
 extern int randomN;
 extern int point;
 
-extern bool pauseMenuActive;
+extern bool pauseState;
 extern bool enterPressed;
 extern bool paddle1LTH;
 

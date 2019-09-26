@@ -32,8 +32,9 @@ void Execute()
 
 static void Init()
 {
+	pauseState = false;
+
 	InitBall(ball);
-	InitGameplayButtons(jugarButton, volverAndPausaButton, pauseMenu, continuarButton, volverAlMdSButton, volverAlMPButton);
 }
 
 static void Update()
@@ -42,22 +43,9 @@ static void Update()
 	//----------------------------------------------------------------------------------
 	cursor = GetMousePosition();
 
-	//Pausa
-	if ((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
-		&&
-		(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height))
-	{
-		DrawRectangle(static_cast<int>(volverAndPausaButton.x), static_cast<int>(volverAndPausaButton.y), static_cast<int>(volverAndPausaButton.width), static_cast<int>(volverAndPausaButton.height), RAYWHITE);
-		DrawText("|| Pausa", static_cast<int>(volverAndPausaButton.x + 5), static_cast<int>(volverAndPausaButton.y + 5), 20, BLACK);
-	}
-	else
-		DrawText("|| Pausa", static_cast<int>(volverAndPausaButton.x + 5), static_cast<int>(volverAndPausaButton.y + 5), 20, RAYWHITE);
-	if (((cursor.x > volverAndPausaButton.x && cursor.x < volverAndPausaButton.x + volverAndPausaButton.width)
-		&&
-		(cursor.y > volverAndPausaButton.y && cursor.y < volverAndPausaButton.y + volverAndPausaButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		pauseMenuActive = true;
+	GenerateButton(pausa);
 
-	if (!pauseMenuActive)
+	if (!pauseState)
 	{
 		//Input de los jugadores
 		if (IsKeyDown(KEY_W) || (IsKeyDown(KEY_S)))
@@ -219,59 +207,14 @@ static void Update()
 	}
 	else
 	{
-		DrawRectangle(static_cast<int>(pauseMenu.x), static_cast<int>(pauseMenu.y), static_cast<int>(pauseMenu.width), static_cast<int>(pauseMenu.height), BLACK);
-		DrawRectangleLines(static_cast<int>(pauseMenu.x), static_cast<int>(pauseMenu.y), static_cast<int>(pauseMenu.width), static_cast<int>(pauseMenu.height), RAYWHITE);
+		DrawRectangle(static_cast<int>(pauseMenu.rec.x), static_cast<int>(pauseMenu.rec.y), static_cast<int>(pauseMenu.rec.width), static_cast<int>(pauseMenu.rec.height), BLACK);
+		DrawRectangleLines(static_cast<int>(pauseMenu.rec.x), static_cast<int>(pauseMenu.rec.y), static_cast<int>(pauseMenu.rec.width), static_cast<int>(pauseMenu.rec.height), RAYWHITE);
 
-		//Continuar
-		if ((cursor.x > continuarButton.x && cursor.x < continuarButton.x + continuarButton.width)
-			&&
-			(cursor.y > continuarButton.y && cursor.y < continuarButton.y + continuarButton.height))
-		{
-			DrawRectangle(static_cast<int>(continuarButton.x), static_cast<int>(continuarButton.y), static_cast<int>(continuarButton.width), static_cast<int>(continuarButton.height), RAYWHITE);
-			DrawText("Continuar", static_cast<int>(continuarButton.x + 5), static_cast<int>(continuarButton.y + 5), 20, BLACK);
-		}
-		else
-			DrawText("Continuar", static_cast<int>(continuarButton.x + 5), static_cast<int>(continuarButton.y + 5), 20, RAYWHITE);
-		if (((cursor.x > continuarButton.x && cursor.x < continuarButton.x + continuarButton.width)
-			&&
-			(cursor.y > continuarButton.y && cursor.y < continuarButton.y + continuarButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-			pauseMenuActive = false;
+		GenerateButton(continuar);
 
-		//Volver al menú de selección
-		if ((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
-			&&
-			(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height))
-		{
-			DrawRectangle(static_cast<int>(volverAlMdSButton.x), static_cast<int>(volverAlMdSButton.y), static_cast<int>(volverAlMdSButton.width), static_cast<int>(volverAlMdSButton.height), RAYWHITE);
-			DrawText("Volver al menu de seleccion", static_cast<int>(volverAlMdSButton.x + 5), static_cast<int>(volverAlMdSButton.y + 5), 20, BLACK);
-		}
-		else
-			DrawText("Volver al menu de seleccion", static_cast<int>(volverAlMdSButton.x + 5), static_cast<int>(volverAlMdSButton.y + 5), 20, RAYWHITE);
-		if (((cursor.x > volverAlMdSButton.x && cursor.x < volverAlMdSButton.x + volverAlMdSButton.width)
-			&&
-			(cursor.y > volverAlMdSButton.y && cursor.y < volverAlMdSButton.y + volverAlMdSButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		{
-			pauseMenuActive = false;
-			currentState = GameState::SelectionMenu;
-		}
+		GenerateButton(volverAlMenuDeSeleccion);
 
-		//Volver al menú principal
-		if ((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
-			&&
-			(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height))
-		{
-			DrawRectangle(static_cast<int>(volverAlMPButton.x), static_cast<int>(volverAlMPButton.y), static_cast<int>(volverAlMPButton.width), static_cast<int>(volverAlMPButton.height), RAYWHITE);
-			DrawText("Volver al menu principal", static_cast<int>(volverAlMPButton.x + 5), static_cast<int>(volverAlMPButton.y + 5), 20, BLACK);
-		}
-		else
-			DrawText("Volver al menu principal", static_cast<int>(volverAlMPButton.x + 5), static_cast<int>(volverAlMPButton.y + 5), 20, RAYWHITE);
-		if (((cursor.x > volverAlMPButton.x && cursor.x < volverAlMPButton.x + volverAlMPButton.width)
-			&&
-			(cursor.y > volverAlMPButton.y && cursor.y < volverAlMPButton.y + volverAlMPButton.height)) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		{
-			pauseMenuActive = false;
-			currentState = GameState::MainMenu;
-		}
+		GenerateButton(volverAlMenuPrincipal);
 	}
 }
 
