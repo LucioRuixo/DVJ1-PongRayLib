@@ -42,70 +42,67 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Game.cpp">
-      <Filter>Archivos de recursos\main</Filter>
+    <ClCompile Include="..\src\Game\game.cpp">
+      <Filter>Archivos de recursos\main\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Game Over.cpp">
-      <Filter>Archivos de recursos\main\Game\States</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Main Menu.cpp">
-      <Filter>Archivos de recursos\main\Game\States</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Ball.cpp">
+    <ClCompile Include="..\src\Game\Elements\ball.cpp">
       <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Paddles.cpp">
+    <ClCompile Include="..\src\Game\Elements\buttons.cpp">
       <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Buttons.cpp">
+    <ClCompile Include="..\src\Game\Elements\paddles.cpp">
       <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Selection Menu.cpp">
+    <ClCompile Include="..\src\Game\States\game_over.cpp">
       <Filter>Archivos de recursos\main\Game\States</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Gameplay_PvP.cpp">
+    <ClCompile Include="..\src\Game\States\main_menu.cpp">
       <Filter>Archivos de recursos\main\Game\States</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Gameplay_PvAI.cpp">
+    <ClCompile Include="..\src\Game\States\selection_menu.cpp">
       <Filter>Archivos de recursos\main\Game\States</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Arrows.cpp">
+    <ClCompile Include="..\src\Game\States\gameplay.cpp">
+      <Filter>Archivos de recursos\main\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\Elements\power_ups.cpp">
       <Filter>Archivos de recursos\main\Game\Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\lib\include\raylib.h">
+    <ClInclude Include="..\lib\RayLib\include\raylib.h">
       <Filter>Archivos de encabezado\lib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Game Over.h">
-      <Filter>Archivos de encabezado\main\Game\States</Filter>
+    <ClInclude Include="..\src\Game\game.h">
+      <Filter>Archivos de encabezado\main\Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Main Menu.h">
-      <Filter>Archivos de encabezado\main\Game\States</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Ball.h">
+    <ClInclude Include="..\src\Game\Elements\arrows.h">
       <Filter>Archivos de encabezado\main\Game\Elements</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Paddles.h">
+    <ClInclude Include="..\src\Game\Elements\ball.h">
       <Filter>Archivos de encabezado\main\Game\Elements</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Buttons.h">
+    <ClInclude Include="..\src\Game\Elements\buttons.h">
       <Filter>Archivos de encabezado\main\Game\Elements</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Game.h">
-      <Filter>Archivos de encabezado\main</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Selection Menu.h">
-      <Filter>Archivos de encabezado\main\Game\States</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Gameplay_PvAI.h">
-      <Filter>Archivos de encabezado\main\Game\States</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Gameplay_PvP.h">
-      <Filter>Archivos de encabezado\main\Game\States</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Arrows.h">
+    <ClInclude Include="..\src\Game\Elements\paddles.h">
       <Filter>Archivos de encabezado\main\Game\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\States\game_over.h">
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\States\main_menu.h">
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\States\selection_menu.h">
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\Elements\power_ups.h">
+      <Filter>Archivos de encabezado\main\Game\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\States\gameplay.h">
+      <Filter>Archivos de encabezado\main\Game\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

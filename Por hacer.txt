@@ -1,5 +1,6 @@
-﻿Crear función para generar las flechas de selección de color.
-Terminar power-ups.
+﻿Terminar power-ups.
 Agregar sonido.
+Hacer que el ángulo de la pelota cambie dependiendo de la parte de la paleta en la que pega.
+Permitir navegar entre menús con el teclado.
 Terminar de subdividir código.
 Arreglar opción de pantalla completa (conseguir que RayLib devuelva la resolución del monitor).

@@ -1,27 +1,21 @@
-#include "Game.h"
+#include "game.h"
 
-#include "Game Over.h"
-#include "Gameplay_PvAI.h"
-#include "Gameplay_PvP.h"
-#include "Main Menu.h"
-#include "Selection Menu.h"
-#include "Buttons.h"
-#include "Paddles.h"
+#include "Game/States/game_over.h"
+#include "Game/States/gameplay.h"
+#include "Game/States/main_menu.h"
+#include "Game/States/selection_menu.h"
+#include "Game/Elements/buttons.h"
+#include "Game/Elements/paddles.h"
 
 GameState currentState;
 GameState selectedGameMode;
 
-PowerUp powerUp;
 //powerUp.good = (GetRandomValue(1, 2) == 1);
 
 Vector2 cursor;
 
-int randomN;
-int point;
-
-bool pauseState;
+float deltaTime;
 bool enterPressed;
-bool paddle1LTH;
 
 //----------------------------------------------------------------
 
@@ -32,7 +26,6 @@ static void Init();
 void Execute()
 {
 	Init();
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
 
 	SetTargetFPS(60);
 
@@ -51,12 +44,9 @@ void Execute()
 			Selection_Menu::Execute();
 		}
 		case GameState::PvP:
-		{
-			Gameplay_PvP::Execute();
-		}
 		case GameState::PvAI:
 		{
-			Gameplay_PvAI::Execute();
+			Gameplay::Execute();
 		}
 		case GameState::GameOver:
 		{
@@ -74,12 +64,12 @@ static void Init()
 {
 	currentState = GameState::MainMenu;
 
-	IAPaddleSpeed = 5;
+	deltaTime = 0;
 
-	paddle1LastToHit = false;
 	pauseState = false;
 	enterPressed = false;
 
+	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
 	InitMainMenuButtons(jugadorVsIA, jugadorVsJugador, pantallaCompleta, salir);
 	InitSelectionMenuButtons(jugar, volver);
 	InitGameplayAndGameOverButtons(continuar, pausa, pauseMenu, volverAlMenuDeSeleccion, volverAlMenuPrincipal);
