@@ -37,4 +37,7 @@ Paddle InitPaddle();
 void InitArrows(Paddle &paddle);
 void GeneratePaddleArrows(Paddle &paddle);
 
+void ApplyPowerUp(Paddle &paddle);
+void RemovePowerUp(Paddle &paddle);
+
 #endif

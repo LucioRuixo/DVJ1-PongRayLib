@@ -3,12 +3,13 @@
 
 #include "raylib.h"
 
+#include "Game/game.h"
 #include "Game/States/gameplay.h"
 
 const int powerUpHeight = 50;
 const int powerUpWidth = 50;
-const int spawnTimerMin = 5;
-const int spawnTimerMax = 15;
+const int spawnTimerMin = 3;
+const int spawnTimerMax = 10;
 const int xMin = screenWidth / 4;
 const int xMax = (screenWidth / 4) * 3 - powerUpWidth;
 const int yMin = gameplayScreenMinY;
@@ -32,11 +33,20 @@ struct PowerUp
 	float timer;
 	float timerGoal;
 
+	const char* text;
+
 	bool active;
 	bool good;
 };
 
-void InitPowerUp(PowerUp &powerUp);
+extern PowerUp powerUp;
+
+extern bool powerUpSpawned;
+
+//----------------------------------------------------------------
+
+void InitPowerUp();
 void GeneratePowerUp();
+void DrawPowerUp();
 
 #endif

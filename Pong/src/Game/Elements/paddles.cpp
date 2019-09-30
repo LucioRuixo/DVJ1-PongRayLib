@@ -5,7 +5,7 @@
 Paddle paddle1;
 Paddle paddle2;
 
-bool paddle1;
+bool paddle1LastToHit;
 
 //----------------------------------------------------------------
 
@@ -14,10 +14,6 @@ Paddle InitPaddle()
 	Paddle paddle;
 
 	paddle.color = RAYWHITE;
-
-	paddle.powerUp.timer = 0;
-	paddle.powerUp.timerGoal = static_cast<float>(GetRandomValue(spawnTimerMin, spawnTimerMax));
-	paddle.powerUp.active = false;
 
 	paddle.rec.width = paddleWidth;
 	paddle.rec.height = paddleHeight;
@@ -65,39 +61,13 @@ void GeneratePaddleArrows(Paddle &paddle)
 			paddle.colorCode = 0;
 	}
 }
-/*
-void GeneratePowerUp()
+
+void ApplyPowerUp(Paddle &paddle)
 {
-	if (!paddle.powerUp.spawned)
-	{
-		if (powerUp.timer == powerUp.timerGoal)
-		{
-			powerUp.spawned = true;
-			powerUp.timer = 0;
-			powerUp.timerGoal = 8;
-		}
-	}
-	else
-	{
-		if (!powerUp.active)
-		{
-			//Si la pelota colisiona con el PU -> active = true, timer = 0, timerGoal = 60 * 8
+	
+}
 
-			if (powerUp.timer == powerUp.timerGoal)
-				powerUp.spawned = false;
-		}
-		else
-		{
-			//Definir qué PU se activa
-			//Definir si es bueno o malo
-			//Aplicarlo al jugador que corresponda
+void RemovePowerUp(Paddle &paddle)
+{
 
-			if (powerUp.timer == powerUp.timerGoal)
-			{
-
-			}
-		}
-	}
-
-	powerUp.timer++;
-}*/
+}

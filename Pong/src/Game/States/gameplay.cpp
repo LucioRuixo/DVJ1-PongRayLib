@@ -13,8 +13,6 @@ bool pauseState;
 static float powerUpSpawnTimer;
 static float powerUpSpawnTimerGoal;
 
-static bool powerUpSpawned;
-
 namespace Gameplay
 {
 static void Init();
@@ -57,9 +55,8 @@ static void Init()
 	powerUpSpawnTimerGoal = static_cast<float>(GetRandomValue(spawnTimerMax, spawnTimerMax));
 
 	paddle1LastToHit = false;
-	powerUpSpawned = false;
-
 	pauseState = false;
+	powerUpSpawned = false;
 
 	InitBall(ball);
 }
@@ -76,6 +73,8 @@ static void Update()
 		UpdatePaddles();
 
 		UpdateBall();
+
+		UpdatePowerUp();
 
 		CheckCollisions();
 	}
@@ -197,17 +196,18 @@ static void UpdatePowerUp()
 	{
 		if (powerUpSpawnTimer >= powerUpSpawnTimerGoal)
 		{
+			powerUpSpawnTimer = 0;
+
 			powerUpSpawned = true;
 
-			if (paddle1LastToHit)
-				InitPowerUp(paddle1);
-			else
-				InitPowerUp(paddle2);
+			InitPowerUp();
 		}
+
+		powerUpSpawnTimer += deltaTime;
 	}
 	else
 	{
-
+		GeneratePowerUp();
 	}
 }
 
@@ -225,9 +225,12 @@ static void CheckCollisions()
 				ball.up = false;
 		}
 
-		paddle1LastToHit = true;
-		ball.direction.x += 0.25f * deltaTime;
 		ball.color = paddle1.color;
+
+		ball.direction.x += 0.25f * deltaTime;
+
+		if (!powerUpSpawned)
+			paddle1LastToHit = true;
 	}
 	if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, static_cast<float>(ball.radius), paddle2.rec))
 	{
@@ -241,9 +244,12 @@ static void CheckCollisions()
 				ball.up = false;
 		}
 
-		paddle1LastToHit = false;
-		ball.direction.x += 0.25f * deltaTime;
 		ball.color = paddle2.color;
+
+		ball.direction.x += 0.25f * deltaTime;
+
+		if (!powerUpSpawned)
+			paddle1LastToHit = false;
 	}
 }
 
