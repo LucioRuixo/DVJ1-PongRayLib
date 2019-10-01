@@ -20,7 +20,10 @@ struct Paddle
 	int colorCode;
 	int score;
 
-	bool movement;
+	float ballAndCenterDiference;
+	float center;
+	float speed;
+
 	bool up;
 	bool right;
 };
@@ -37,7 +40,7 @@ Paddle InitPaddle();
 void InitArrows(Paddle &paddle);
 void GeneratePaddleArrows(Paddle &paddle);
 
-void ApplyPowerUp(Paddle &paddle);
-void RemovePowerUp(Paddle &paddle);
+void ApplyPowerUp(Paddle &positivePaddle, Paddle &negativePaddle);
+void RemovePowerUp(Paddle &positivePaddle, Paddle &negativePaddle);
 
 #endif

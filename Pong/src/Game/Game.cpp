@@ -10,8 +10,6 @@
 GameState currentState;
 GameState selectedGameMode;
 
-//powerUp.good = (GetRandomValue(1, 2) == 1);
-
 Vector2 cursor;
 
 float deltaTime;
@@ -22,6 +20,8 @@ bool enterPressed;
 namespace Game_
 {
 static void Init();
+
+static void Close();
 
 void Execute()
 {
@@ -57,7 +57,7 @@ void Execute()
 		EndDrawing();
 	}
 
-	CloseWindow();
+	Close();
 }
 
 static void Init()
@@ -66,12 +66,17 @@ static void Init()
 
 	deltaTime = 0;
 
-	pauseState = false;
+	pauseActive = false;
 	enterPressed = false;
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
-	InitMainMenuButtons(jugadorVsIA, jugadorVsJugador, pantallaCompleta, salir);
-	InitSelectionMenuButtons(jugar, volver);
-	InitGameplayAndGameOverButtons(continuar, pausa, pauseMenu, volverAlMenuDeSeleccion, volverAlMenuPrincipal);
+	InitMainMenuButtons(jugadorVsIA, playerVsPlayer, fullScreen_, exit);
+	InitSelectionMenuButtons(jugar, return_);
+	InitGameplayAndGameOverButtons(continue_, pause, pauseMenu, returnToSelectionMenu, returnToMainMenu);
+}
+
+static void Close()
+{
+	CloseWindow();
 }
 }

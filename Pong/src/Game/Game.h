@@ -18,8 +18,6 @@ enum GameState
 extern GameState currentState;
 extern GameState selectedGameMode;
 
-//powerUp.good = (GetRandomValue(1, 2) == 1);
-
 extern Vector2 cursor;
 
 extern float deltaTime;

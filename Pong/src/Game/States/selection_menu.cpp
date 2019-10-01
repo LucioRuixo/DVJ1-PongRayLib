@@ -43,7 +43,7 @@ static void Update()
 {
 	cursor = GetMousePosition();
 
-	GenerateButton(volver);
+	GenerateButton(return_);
 
 	GenerateButton(jugar);
 

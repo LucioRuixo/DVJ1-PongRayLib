@@ -4,8 +4,10 @@
 #include "Game/Elements/paddles.h"
 
 PowerUp powerUp;
+Shield_ shield;
 
 bool powerUpSpawned;
+bool shieldActive;
 
 //----------------------------------------------------------------
 
@@ -54,7 +56,7 @@ void GeneratePowerUp()
 
 			if (CheckCollisionCircleRec(ball.position, static_cast<float>(ball.radius), powerUp.rec))
 			{
-				paddle1LastToHit ? ApplyPowerUp(paddle1) : ApplyPowerUp(paddle2);
+				(powerUp.good && paddle1LastToHit) || (!powerUp.good && !paddle1LastToHit) ? ApplyPowerUp(paddle1, paddle2) : ApplyPowerUp(paddle2, paddle1);
 
 				powerUp.timer = 0;
 
@@ -72,7 +74,7 @@ void GeneratePowerUp()
 	{
 		if (powerUp.timer >= powerUp.timerGoal)
 		{
-			paddle1LastToHit ? RemovePowerUp(paddle1) : RemovePowerUp(paddle2);
+			(powerUp.good && paddle1LastToHit) || (!powerUp.good && !paddle1LastToHit) ? RemovePowerUp(paddle1, paddle2) : RemovePowerUp(paddle2, paddle1);
 
 			powerUp.timer = 0;
 
@@ -88,4 +90,13 @@ void DrawPowerUp()
 	DrawRectangle(static_cast<int>(powerUp.rec.x), static_cast<int>(powerUp.rec.y), static_cast<int>(powerUp.rec.width), static_cast<int>(powerUp.rec.height), powerUp.color);
 
 	DrawText(powerUp.text, static_cast<int>(powerUp.rec.x), static_cast<int>(powerUp.rec.y), 20, RAYWHITE);
+}
+
+void InitShield()
+{
+	(powerUp.good && paddle1LastToHit) || (!powerUp.good && !paddle1LastToHit) ? shield.color = paddle1.color : paddle2.color;
+	shield.rec.height = shieldHeight;
+	shield.rec.width = shieldWidth;
+	(powerUp.good && paddle1LastToHit) || (!powerUp.good && !paddle1LastToHit) ? shield.rec.x = paddle1.rec.x + 100 : paddle2.rec.x - 100;
+	shield.rec.y = static_cast<float>(GetRandomValue(gameplayScreenMinY, screenHeight - shieldHeight));
 }

@@ -8,6 +8,8 @@
 
 const int powerUpHeight = 50;
 const int powerUpWidth = 50;
+const int shieldWidth = 5;
+const int shieldHeight = 200;
 const int spawnTimerMin = 3;
 const int spawnTimerMax = 10;
 const int xMin = screenWidth / 4;
@@ -39,14 +41,24 @@ struct PowerUp
 	bool good;
 };
 
+struct Shield_
+{
+	Color color;
+	Rectangle rec;
+};
+
 extern PowerUp powerUp;
+extern Shield_ shield;
 
 extern bool powerUpSpawned;
+extern bool shieldActive;
 
 //----------------------------------------------------------------
 
 void InitPowerUp();
 void GeneratePowerUp();
 void DrawPowerUp();
+
+void InitShield();
 
 #endif

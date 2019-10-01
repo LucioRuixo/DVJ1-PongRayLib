@@ -32,9 +32,9 @@ static void Update()
 	else
 		DrawText("HA GANADO EL JUGADOR 2!", screenWidth / 2 - 140, screenHeight / 2 - 50, 20, RAYWHITE);
 
-	GenerateButton(volverAlMenuDeSeleccion);
+	GenerateButton(returnToSelectionMenu);
 
-	GenerateButton(volverAlMenuPrincipal);
+	GenerateButton(returnToMainMenu);
 }
 
 static void Draw()

@@ -19,6 +19,8 @@ Paddle InitPaddle()
 	paddle.rec.height = paddleHeight;
 	paddle.rec.y = screenHeight / 2 - paddleHeight / 2;
 
+	paddle.speed = paddleSpeed;
+
 	paddle.colorCode = 0;
 	paddle.score = 0;
 
@@ -62,12 +64,47 @@ void GeneratePaddleArrows(Paddle &paddle)
 	}
 }
 
-void ApplyPowerUp(Paddle &paddle)
+void ApplyPowerUp(Paddle &positivePaddle, Paddle &negativePaddle)
 {
-	
+	switch (powerUp.type)
+	{
+	case PowerUpType::Bigger:
+		positivePaddle.rec.height *= 2;
+		break;
+	case PowerUpType::Smaller:
+		negativePaddle.rec.height /= 1.5;
+		break;
+	case PowerUpType::Speedier:
+		positivePaddle.speed *= 2;
+		break;
+	case PowerUpType::LessSpeedy:
+		negativePaddle.speed /= 2;
+		break;
+	case PowerUpType::Shield:
+		shieldActive = true;
+		InitShield();
+		break;
+	}
 }
 
-void RemovePowerUp(Paddle &paddle)
+void RemovePowerUp(Paddle &positivePaddle, Paddle &negativePaddle)
 {
-
+	switch (powerUp.type)
+	{
+	case PowerUpType::Bigger:
+		positivePaddle.rec.height = paddleHeight;
+		break;
+	case PowerUpType::Smaller:
+		negativePaddle.rec.height = paddleHeight;
+		break;
+	case PowerUpType::Speedier:
+		positivePaddle.speed = paddleSpeed;
+		break;
+	case PowerUpType::LessSpeedy:
+		negativePaddle.speed = paddleSpeed;
+		break;
+	case PowerUpType::Shield:
+		shieldActive = false;
+		break;
+	}
 }

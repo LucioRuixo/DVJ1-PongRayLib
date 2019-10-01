@@ -3,8 +3,8 @@
 
 #include "raylib.h"
 
-const int minBallSpeed = 1150;
-const int maxBallSpeed = 1400;
+const int ballSpeedIncrease = 25;
+const int ballSpeedMin = 1200;
 
 struct Ball
 {
@@ -22,6 +22,6 @@ extern Ball ball;
 
 //----------------------------------------------------------------
 
-void InitBall(Ball &ball);
+void InitBall();
 
 #endif

@@ -6,9 +6,8 @@
 #include "Game/Elements/paddles.h"
 
 int point;
-int randomN;
 
-bool pauseState;
+bool pauseActive;
 
 static float powerUpSpawnTimer;
 static float powerUpSpawnTimerGoal;
@@ -38,12 +37,12 @@ void Execute()
 		ClearBackground(BLACK);
 			
 		Update();
-
+		
 		Draw();
 
 		EndDrawing();
 	}
-		
+
 	if (paddle1.score >= 11 || paddle2.score >= 11)
 		currentState = GameState::GameOver;
 }
@@ -55,10 +54,10 @@ static void Init()
 	powerUpSpawnTimerGoal = static_cast<float>(GetRandomValue(spawnTimerMax, spawnTimerMax));
 
 	paddle1LastToHit = false;
-	pauseState = false;
+	pauseActive = false;
 	powerUpSpawned = false;
 
-	InitBall(ball);
+	InitBall();
 }
 
 //Update
@@ -66,9 +65,9 @@ static void Update()
 {
 	cursor = GetMousePosition();
 
-	GenerateButton(pausa);
+	GenerateButton(pause);
 
-	if (!pauseState)
+	if (!pauseActive)
 	{
 		UpdatePaddles();
 
@@ -85,42 +84,41 @@ static void UpdatePaddles()
 	//Paleta 1
 	if (IsKeyDown(KEY_W) || (IsKeyDown(KEY_S)))
 	{
-		paddle1.movement = true;
-
 		if (IsKeyDown(KEY_W))
 		{
-			paddle1.rec.y -= paddleSpeed * deltaTime;
+			paddle1.rec.y -= paddle1.speed * deltaTime;
 			paddle1.up = true;
 		}
 		if (IsKeyDown(KEY_S))
 		{
-			paddle1.rec.y += paddleSpeed * deltaTime;
+			paddle1.rec.y += paddle1.speed * deltaTime;
 			paddle1.up = false;
 		}
 	}
-	else
-		paddle1.movement = false;
+
+	if (paddle1.rec.y < gameplayScreenMinY)
+		paddle1.rec.y = gameplayScreenMinY;
+	if (paddle1.rec.y + paddleHeight > screenHeight - 1)
+		paddle1.rec.y = (screenHeight - 1) - paddleHeight;
+
+	paddle1.center = paddle1.rec.y + paddle1.rec.height / 2;
 
 	//Paleta 2
 	if (currentState == GameState::PvP)
 	{
 		if (IsKeyDown(KEY_UP) || (IsKeyDown(KEY_DOWN)))
 		{
-			paddle2.movement = true;
-
 			if (IsKeyDown(KEY_UP))
 			{
-				paddle2.rec.y -= paddleSpeed * deltaTime;
+				paddle2.rec.y -= paddle2.speed * deltaTime;
 				paddle2.up = true;
 			}
 			if (IsKeyDown(KEY_DOWN))
 			{
-				paddle2.rec.y += paddleSpeed * deltaTime;
+				paddle2.rec.y += paddle2.speed * deltaTime;
 				paddle2.up = false;
 			}
 		}
-		else
-			paddle2.movement = false;
 	}
 	else
 	{
@@ -129,41 +127,36 @@ static void UpdatePaddles()
 			if (ball.up)
 			{
 				if (paddle2.rec.y > ball.position.y)
-					paddle2.rec.y -= paddleSpeed * deltaTime;
+					paddle2.rec.y -= paddle2.speed * deltaTime;
 			}
 			else
 			{
 				if (paddle2.rec.y < ball.position.y)
-					paddle2.rec.y += paddleSpeed * deltaTime;
+					paddle2.rec.y += paddle2.speed * deltaTime;
 			}
 		}
 	}
 
-	if (paddle1.rec.y < gameplayScreenMinY)
-		paddle1.rec.y = gameplayScreenMinY;
-	if (paddle1.rec.y + paddleHeight > screenHeight - 1)
-		paddle1.rec.y = (screenHeight - 1) - paddleHeight;
 	if (paddle2.rec.y < gameplayScreenMinY)
 		paddle2.rec.y = gameplayScreenMinY;
 	if (paddle2.rec.y + paddleHeight > screenHeight - 1)
 		paddle2.rec.y = (screenHeight - 1) - paddleHeight;
+
+	paddle2.center = paddle2.rec.y + paddle2.rec.height / 2;
 }
 
 static void UpdateBall()
 {
-	if (ball.up)
-		ball.position.y -= ball.direction.y * deltaTime;
-	else
-		ball.position.y += ball.direction.y * deltaTime;
-	if (ball.right)
-		ball.position.x += ball.direction.x * deltaTime;
-	else
-		ball.position.x -= ball.direction.x * deltaTime;
-
-	if (ball.position.y - ball.radius <= gameplayScreenMinY)
+	if (static_cast<float>(ball.position.y - ball.radius) <= static_cast<float>(gameplayScreenMinY))
 		ball.up = false;
-	if (ball.position.y + ball.radius >= screenHeight - 1)
+	if (static_cast<float>(ball.position.y + ball.radius)
+		>= static_cast<float>(screenHeight - 1))
 		ball.up = true;
+
+	ball.up ? ball.position.y -= ball.direction.y * deltaTime : ball.position.y += ball.direction.y * deltaTime;
+	ball.right ? ball.position.x += ball.direction.x * deltaTime : ball.position.x -= ball.direction.x * deltaTime;
+
+	ball.direction.x += ballSpeedIncrease * deltaTime;
 
 	if (ball.position.x + ball.radius < 0 || ball.position.x - ball.radius > screenWidth - 1)
 	{
@@ -174,19 +167,7 @@ static void UpdateBall()
 
 		point++;
 
-		ball.position = { screenWidth / 2, screenHeight / 2 };
-		ball.direction = { static_cast<float>(GetRandomValue(static_cast<int>(minBallSpeed), static_cast<int>(maxBallSpeed - 1))), maxBallSpeed - ball.direction.x };
-
-		randomN = GetRandomValue(1, 2);
-		if (randomN == 1)
-			ball.up = true;
-		else
-			ball.up = false;
-
-		if (point % 2 == 0)
-			ball.right = true;
-		else
-			ball.right = false;
+		InitBall();
 	}
 }
 
@@ -217,39 +198,38 @@ static void CheckCollisions()
 	{
 		ball.right = true;
 
-		if (paddle1.movement)
-		{
-			if (!paddle1.up)
-				ball.up = true;
-			else
-				ball.up = false;
-		}
-
 		ball.color = paddle1.color;
-
-		ball.direction.x += 0.25f * deltaTime;
 
 		if (!powerUpSpawned)
 			paddle1LastToHit = true;
+
+		paddle1.center = paddle1.rec.y + paddle1.rec.height / 2;
+
+		paddle1.ballAndCenterDiference = paddle1.center - ball.position.y;
+
+		ball.direction.y = ball.direction.x * ((paddle1.rec.height / 2) / 10000 * paddle1.ballAndCenterDiference);
 	}
+
 	if (CheckCollisionCircleRec({ ball.position.x, ball.position.y }, static_cast<float>(ball.radius), paddle2.rec))
 	{
 		ball.right = false;
 
-		if (paddle2.movement)
-		{
-			if (!paddle2.up)
-				ball.up = true;
-			else
-				ball.up = false;
-		}
-
 		ball.color = paddle2.color;
-
-		ball.direction.x += 0.25f * deltaTime;
 
 		if (!powerUpSpawned)
 			paddle1LastToHit = false;
+
+		paddle2.center = paddle2.rec.y + paddle2.rec.height / 2;
+
+		paddle2.ballAndCenterDiference = paddle2.center - ball.position.y;
+
+		ball.direction.y = ball.direction.x * ((paddle2.rec.height / 2) / 10000 * paddle2.ballAndCenterDiference);
+	}
+
+	if (shieldActive)
+	{
+		if (CheckCollisionCircleRec(ball.position, static_cast<float>(ball.radius), shield.rec))
+			ball.right ? ball.right = false : ball.right = true;
 	}
 }
 
@@ -263,21 +243,26 @@ static void Draw()
 	DrawLine(0, gameplayScreenMinY, screenWidth - 1, gameplayScreenMinY, RAYWHITE);
 	DrawLine(0, screenHeight - 1, screenWidth - 1, screenHeight - 1, RAYWHITE);
 
-	DrawRectangleV({ paddle1.rec.x, paddle1.rec.y }, { paddleWidth, paddleHeight }, paddle1.color);
-	DrawRectangleV({ paddle2.rec.x, paddle2.rec.y }, { paddleWidth, paddleHeight }, paddle2.color);
+	DrawRectangleV({ paddle1.rec.x, paddle1.rec.y }, { paddle1.rec.width, paddle1.rec.height }, paddle1.color);
+	DrawRectangleV({ paddle2.rec.x, paddle2.rec.y }, { paddle2.rec.width, paddle2.rec.height }, paddle2.color);
 
 	DrawCircleV(ball.position, static_cast<float>(ball.radius), ball.color);
 	
-	if (pauseState)
+	if (shieldActive)
+	{
+		DrawRectangle(static_cast<int>(shield.rec.x), static_cast<int>(shield.rec.y), static_cast<int>(shield.rec.width), static_cast<int>(shield.rec.height), shield.color);
+	}
+
+	if (pauseActive)
 	{
 		DrawRectangle(static_cast<int>(pauseMenu.rec.x), static_cast<int>(pauseMenu.rec.y), static_cast<int>(pauseMenu.rec.width), static_cast<int>(pauseMenu.rec.height), BLACK);
 		DrawRectangleLines(static_cast<int>(pauseMenu.rec.x), static_cast<int>(pauseMenu.rec.y), static_cast<int>(pauseMenu.rec.width), static_cast<int>(pauseMenu.rec.height), RAYWHITE);
 
-		GenerateButton(continuar);
+		GenerateButton(continue_);
 
-		GenerateButton(volverAlMenuDeSeleccion);
+		GenerateButton(returnToSelectionMenu);
 
-		GenerateButton(volverAlMenuPrincipal);
+		GenerateButton(returnToMainMenu);
 	}
 }
 }

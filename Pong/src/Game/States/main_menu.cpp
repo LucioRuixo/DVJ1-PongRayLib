@@ -26,13 +26,13 @@ static void Update()
 {
 	cursor = GetMousePosition();
 
-	GenerateButton(pantallaCompleta);
+	GenerateButton(fullScreen_);
 
-	GenerateButton(jugadorVsJugador);
+	GenerateButton(playerVsPlayer);
 
 	GenerateButton(jugadorVsIA);
 
-	GenerateButton(salir);
+	GenerateButton(exit);
 }
 
 static void Draw()

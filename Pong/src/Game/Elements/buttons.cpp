@@ -1,19 +1,20 @@
 #include "buttons.h"
 
+#include "Game/game.h"
 #include "Game/States/gameplay.h"
 #include "Game/Elements/paddles.h"
 
-Button continuar;
-Button jugadorVsJugador;
+Button continue_;
+Button playerVsPlayer;
 Button jugadorVsIA;
 Button jugar;
-Button pantallaCompleta;
-Button pausa;
+Button fullScreen_;
+Button pause;
 Button pauseMenu;
-Button salir;
-Button volver;
-Button volverAlMenuDeSeleccion;
-Button volverAlMenuPrincipal;
+Button exit;
+Button return_;
+Button returnToSelectionMenu;
+Button returnToMainMenu;
 
 //----------------------------------------------------------------
 
@@ -41,7 +42,7 @@ void GenerateButton(Button button)
 			CloseWindow();
 			break;
 		case Function::Pause:
-			pauseState ? pauseState = false : pauseState = true;
+			pauseActive ? pauseActive = false : pauseActive = true;
 			break;
 		case Function::Play:
 			currentState = selectedGameMode;
@@ -62,7 +63,7 @@ void GenerateButton(Button button)
 }
 
 //Init
-void InitMainMenuButtons(Button &jugadorVsIA, Button &jugadorVsJugador, Button &pantallaCompleta, Button &salir)
+void InitMainMenuButtons(Button &jugadorVsIA, Button &playerVsPlayer, Button &fullScreen_, Button &exit)
 {
 	jugadorVsIA.function = Function::SelectPvAI;
 	jugadorVsIA.state = GameState::SelectionMenu;
@@ -72,30 +73,30 @@ void InitMainMenuButtons(Button &jugadorVsIA, Button &jugadorVsJugador, Button &
 	jugadorVsIA.rec.y = screenHeight / 2 + 80;
 	jugadorVsIA.text = "Jugador vs. IA";
 
-	jugadorVsJugador.function = Function::SelectPvP;
-	jugadorVsJugador.state = GameState::SelectionMenu;
-	jugadorVsJugador.rec.width = 220;
-	jugadorVsJugador.rec.height = 30;
-	jugadorVsJugador.rec.x = screenWidth / 2 - 100;
-	jugadorVsJugador.rec.y = screenHeight / 2 + 45;
-	jugadorVsJugador.text = "Jugador vs. Jugador";
+	playerVsPlayer.function = Function::SelectPvP;
+	playerVsPlayer.state = GameState::SelectionMenu;
+	playerVsPlayer.rec.width = 220;
+	playerVsPlayer.rec.height = 30;
+	playerVsPlayer.rec.x = screenWidth / 2 - 100;
+	playerVsPlayer.rec.y = screenHeight / 2 + 45;
+	playerVsPlayer.text = "Jugador vs. Jugador";
 
-	pantallaCompleta.function = Function::Fullscreen;
-	pantallaCompleta.rec.width = 190;
-	pantallaCompleta.rec.height = 30;
-	pantallaCompleta.rec.x = screenWidth - pantallaCompleta.rec.width - 10;
-	pantallaCompleta.rec.y = 10;
-	pantallaCompleta.text = "Pantalla completa";
+	fullScreen_.function = Function::Fullscreen;
+	fullScreen_.rec.width = 190;
+	fullScreen_.rec.height = 30;
+	fullScreen_.rec.x = screenWidth - fullScreen_.rec.width - 10;
+	fullScreen_.rec.y = 10;
+	fullScreen_.text = "Pantalla completa";
 
-	salir.function = Function::ExitGame;
-	salir.rec.width = 60;
-	salir.rec.height = 30;
-	salir.rec.x = screenWidth / 2 - 20;
-	salir.rec.y = screenHeight / 2 + 115;
-	salir.text = "Salir";
+	exit.function = Function::ExitGame;
+	exit.rec.width = 60;
+	exit.rec.height = 30;
+	exit.rec.x = screenWidth / 2 - 20;
+	exit.rec.y = screenHeight / 2 + 115;
+	exit.text = "Salir";
 }
 
-void InitSelectionMenuButtons(Button &jugar, Button &volver)
+void InitSelectionMenuButtons(Button &jugar, Button &return_)
 {
 	jugar.function = Function::Play;
 	jugar.rec.width = 80;
@@ -104,49 +105,49 @@ void InitSelectionMenuButtons(Button &jugar, Button &volver)
 	jugar.rec.y = screenHeight / 2 + 45;
 	jugar.text = "JUGAR";
 
-	volver.function = Function::ChangeState;
-	volver.state = GameState::MainMenu;
-	volver.rec.width = 95;
-	volver.rec.height = 30;
-	volver.rec.x = 10;
-	volver.rec.y = 10;
-	volver.text = "< Volver";
+	return_.function = Function::ChangeState;
+	return_.state = GameState::MainMenu;
+	return_.rec.width = 95;
+	return_.rec.height = 30;
+	return_.rec.x = 10;
+	return_.rec.y = 10;
+	return_.text = "< Volver";
 }
 
-void InitGameplayAndGameOverButtons(Button &continuar, Button &pausa, Button &pauseMenu, Button &volverAlMenuDeSeleccion, Button &volverAlMenuPrincipal)
+void InitGameplayAndGameOverButtons(Button &continue_, Button &pause, Button &pauseMenu, Button &return_AlMenuDeSeleccion, Button &return_AlMenuPrincipal)
 {
 	pauseMenu.rec.width = 315;
 	pauseMenu.rec.height = 130;
 	pauseMenu.rec.x = screenWidth / 2 - pauseMenu.rec.width / 2;
 	pauseMenu.rec.y = screenHeight / 2 - pauseMenu.rec.height / 2;
 
-	continuar.function = Function::Pause;
-	continuar.rec.width = 110;
-	continuar.rec.height = 30;
-	continuar.rec.x = screenWidth / 2 - continuar.rec.width / 2;
-	continuar.rec.y = screenHeight / 2 - continuar.rec.height / 2 - ((pauseMenu.rec.height - continuar.rec.height * 3) / 4 + continuar.rec.height);
-	continuar.text = "Continuar";
+	continue_.function = Function::Pause;
+	continue_.rec.width = 110;
+	continue_.rec.height = 30;
+	continue_.rec.x = screenWidth / 2 - continue_.rec.width / 2;
+	continue_.rec.y = screenHeight / 2 - continue_.rec.height / 2 - ((pauseMenu.rec.height - continue_.rec.height * 3) / 4 + continue_.rec.height);
+	continue_.text = "Continuar";
 
-	pausa.function = Function::Pause;
-	pausa.rec.width = 95;
-	pausa.rec.height = 30;
-	pausa.rec.x = 10;
-	pausa.rec.y = 10;
-	pausa.text = "|| Pausa";
+	pause.function = Function::Pause;
+	pause.rec.width = 95;
+	pause.rec.height = 30;
+	pause.rec.x = 10;
+	pause.rec.y = 10;
+	pause.text = "|| Pausa";
 
-	volverAlMenuDeSeleccion.function = Function::ChangeState;
-	volverAlMenuDeSeleccion.state = GameState::SelectionMenu;
-	volverAlMenuDeSeleccion.rec.width = 295;
-	volverAlMenuDeSeleccion.rec.height = 30;
-	volverAlMenuDeSeleccion.rec.x = screenWidth / 2 - volverAlMenuDeSeleccion.rec.width / 2;
-	volverAlMenuDeSeleccion.rec.y = screenHeight / 2 - volverAlMenuDeSeleccion.rec.height / 2;
-	volverAlMenuDeSeleccion.text = "Volver al menu de seleccion";
+	returnToSelectionMenu.function = Function::ChangeState;
+	returnToSelectionMenu.state = GameState::SelectionMenu;
+	returnToSelectionMenu.rec.width = 295;
+	returnToSelectionMenu.rec.height = 30;
+	returnToSelectionMenu.rec.x = screenWidth / 2 - returnToSelectionMenu.rec.width / 2;
+	returnToSelectionMenu.rec.y = screenHeight / 2 - returnToSelectionMenu.rec.height / 2;
+	returnToSelectionMenu.text = "Volver al menu de seleccion";
 
-	volverAlMenuPrincipal.function = Function::ChangeState;
-	volverAlMenuPrincipal.state = GameState::MainMenu;
-	volverAlMenuPrincipal.rec.width = 255;
-	volverAlMenuPrincipal.rec.height = 30;
-	volverAlMenuPrincipal.rec.x = screenWidth / 2 - volverAlMenuPrincipal.rec.width / 2;
-	volverAlMenuPrincipal.rec.y = screenHeight / 2 - volverAlMenuPrincipal.rec.height / 2 + ((pauseMenu.rec.height - volverAlMenuPrincipal.rec.height * 3) / 4 + volverAlMenuPrincipal.rec.height);
-	volverAlMenuPrincipal.text = "Volver al menu principal";
+	returnToMainMenu.function = Function::ChangeState;
+	returnToMainMenu.state = GameState::MainMenu;
+	returnToMainMenu.rec.width = 255;
+	returnToMainMenu.rec.height = 30;
+	returnToMainMenu.rec.x = screenWidth / 2 - returnToMainMenu.rec.width / 2;
+	returnToMainMenu.rec.y = screenHeight / 2 - returnToMainMenu.rec.height / 2 + ((pauseMenu.rec.height - returnToMainMenu.rec.height * 3) / 4 + returnToMainMenu.rec.height);
+	returnToMainMenu.text = "Volver al menu principal";
 }

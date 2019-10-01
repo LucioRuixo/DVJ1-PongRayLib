@@ -4,9 +4,8 @@
 const int gameplayScreenMinY = 95;
 
 extern int point;
-extern int randomN;
 
-extern bool pauseState;
+extern bool pauseActive;
 
 namespace Gameplay
 {
